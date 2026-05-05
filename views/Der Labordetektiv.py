@@ -1,8 +1,15 @@
 import streamlit as st
 import pandas as pd
+import base64 # Für die Einbindung von Bildern in den App-Header
 
 # Diese Zeile stellt die App auf die volle Breite ein
-st.set_page_config(layout="wide", page_title="Der Labordetektiv", page_icon="🔬")
+# st.set_page_config(layout="wide", page_title="Der Labordetektiv", page_icon="🔬")
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode() # Umwandeln der Binärdaten in einen Base64-String
+# Bild wird in Text umgewandelt, damit er im App-Header eingebunden werden kann. CSS kann diesen Text direkt als Hintergrund verwenden
 
 st.markdown("""
 <style>
@@ -740,19 +747,79 @@ def reset_gram_game():
 # HOME SCREEN  Hier sollte die Begrüßung, eine kurze Einführung in das Spiel und ein Start-Button angezeigt werden. Es könnte auch ein Hinweis auf den aktuellen Score oder Fortschritt der Spieler geben, damit sie motiviert bleiben, weiterzuspielen.
 # -------------------------
 if st.session_state.screen == "home":
-    st.title("🧪 Lab Diagnose Game")
-    st.write("Willkommen im biomedizinischen Labor!")
+
+    # Hintergrundbild laden
+    bg_image = get_base64("images/startscreen.png")
 
     st.markdown(f"""
-    <div class="hint-card">
-    🎯 <b>Score:</b> {st.session_state.score}
+    <style>
+
+    .stApp {{
+        background-image: url("data:image/png;base64,{bg_image}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+
+    </style>
+    """, unsafe_allow_html=True)
+
+
+    # Abstand nach oben
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
+
+    # Titel
+    st.markdown("""
+    <div style='text-align:center;'>
+
+    <h1 style='
+        font-size:65px;
+        color:#4B0082;
+        font-weight:900;
+    '>
+    🧪 Lab Diagnose Game
+    </h1>
+
+    <p style='
+        font-size:28px;
+        color:#5A2D82;
+    '>
+    Willkommen im biomedizinischen Labor!
+    </p>
+
     </div>
     """, unsafe_allow_html=True)
 
-    if st.button("Start", key="start_home"):
-        st.session_state.screen = "level"
-        st.session_state.selected_plate = None
-        st.rerun()
+
+    # Score mittig
+    st.markdown(f"""
+    <div style='
+        text-align:center;
+        font-size:28px;
+        font-weight:700;
+        color:#4B0082;
+        margin-top:20px;
+    '>
+
+    🎯 Score: {st.session_state.score}
+
+    </div>
+    """, unsafe_allow_html=True)
+
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+
+    # Button mittig
+    col1, col2, col3 = st.columns([1,1,1])
+
+    with col2:
+
+        if st.button("✨ Start", key="start_home", use_container_width=True):
+            st.session_state.screen = "level"
+            st.session_state.selected_plate = None
+            st.rerun()
 
 # -------------------------
 # LEVEL SCREEN, Hier sollte die Aufführung alles Fälle sein, damit die Spieler einen Fall auswählen können. Es sollte auch der aktuelle Score angezeigt werden.
