@@ -5,12 +5,16 @@ import base64 # Für die Einbindung von Bildern in den App-Header
 # Diese Zeile stellt die App auf die volle Breite ein
 # st.set_page_config(layout="wide", page_title="Der Labordetektiv", page_icon="🔬")
 
+# base64 Funktion für die Einbindung von Bildern in den App-Header
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
     return base64.b64encode(data).decode() # Umwandeln der Binärdaten in einen Base64-String
 # Bild wird in Text umgewandelt, damit er im App-Header eingebunden werden kann. CSS kann diesen Text direkt als Hintergrund verwenden
 
+# =========================================================
+# 1) CSS STYLES # Hier werden alle CSS-Styles definiert, die das Aussehen der App bestimmen.
+# =========================================================
 st.markdown("""
 <style>
 /* App Hintergrund: De ganze Hintergrund wird in sone pinklichi farb */
@@ -877,7 +881,7 @@ elif st.session_state.screen == "lab":
     st.markdown('</div></div></div>', unsafe_allow_html=True)
 
     # --- 2. SÜSSES DROPDOWN FÜR DIE PATIENTENAKTE ---
-    # Wir nutzen ein Expander-Emoji und das Design deiner "Cute-Card"
+    # Hier werden die Patientendaten in einem süßen Dropdown angezeigt, damit die Spieler jederzeit auf die Informationen zugreifen können, ohne dass sie den Überblick verlieren. Die Informationen sollten klar und übersichtlich dargestellt werden, damit die Spieler sie leicht verstehen und in ihre Diagnosen einbeziehen können.
     with st.expander(f"📖 Patientenakte von {data['name']} nachlesen", expanded=False):
         st.markdown(f"""
         <div class="cute-card">
@@ -937,7 +941,7 @@ elif st.session_state.screen == "lab":
 
     with right_col:
         st.write("### 🧠 Finale Diagnose")
-        # Das helle Design für die Selectbox wird durch dein CSS automatisch angewendet
+        # Das helle Design für die Selectbox wird durch CSS automatisch angewendet
         with st.form(key="final_diag"):
             diag = st.selectbox("Was ist deine Diagnose?", ["— bitte wählen —"] + DIAG_CHOICES)
             submit = st.form_submit_button("✅ Diagnose abgeben")
@@ -954,6 +958,17 @@ elif st.session_state.screen == "lab":
                         st.session_state[feedback_key] = {"type": "error", "msg": f"❌ Falsch! Lösung: {solutions[case]}"}
                     st.session_state.scored_cases[case] = True
                     st.rerun()
+        # FEEDBACK ANZEIGEN
+        feedback_key = f"feedback_{case}"
+
+        if feedback_key in st.session_state:
+            fb = st.session_state[feedback_key]
+
+            if fb["type"] == "success":
+                st.success(fb["msg"])
+            elif fb["type"] == "error":
+                st.error(fb["msg"])
+
 
 # -------------------------
 # AGAR SCREEN
@@ -1013,7 +1028,7 @@ elif st.session_state.screen == "agar":
 
     st.write("")
 
-    # 🖼️ Bilder
+    # Bilder für die Fälle
     plate_images = {
         "Fall 1": {
             "COS": "images/fall1_cos.png",
@@ -1047,7 +1062,7 @@ elif st.session_state.screen == "agar":
         }
     }
 
-    # 🧾 Agar-Befunde
+    # Agar-Befunde, schriftliche Interpretation und Schnelltest-Ergebnisse für die Fälle
     plate_text = {
         "Fall 1": {
             "COS": "Goldene Kolonien mit β-Hämolyse",
