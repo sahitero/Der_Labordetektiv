@@ -1055,14 +1055,29 @@ elif st.session_state.screen == "lab":
 # -------------------------
 # AGAR SCREEN
 # -------------------------
+# --- AGAR SCREEN UPDATE ---
 elif st.session_state.screen == "agar":
     case = st.session_state.case
-    plate = st.session_state.get("selected_plate", None)
-
+    
     if st.button("← Zurück zum Labor", key=f"back_from_agar_{case}"):
         st.session_state.screen = "lab"
         st.rerun()
 
+    # GLÜHBIRNE / HILFE SEKTION
+    with st.expander("💡 Wissen: Was verraten uns diese Agarplatten?", expanded=False):
+        st.markdown("""
+        ### 🧫 Die Welt der Nährmedien
+        Um Bakterien zu identifizieren, lassen wir sie auf verschiedenen "Tellern" (Agarplatten) wachsen:
+        
+        *   **COS (Caspari-Agar / Schafblut):** Ein Universalmedium. Fast alles wächst hier. Besonders wichtig: Hier sieht man die **Hämolyse** (wie die Bakterien rote Blutkörperchen zerstören).
+        *   **MAC (MacConkey-Agar):** Ein Selektivmedium für **gramnegative Stäbchen** (z.B. Darmbakterien). Es zeigt auch, ob die Bakterien Zucker (Laktose) vergären können (rosa Färbung!).
+        *   **CNA (Colistin-Nalidixinsäure-Agar):** Ein Selektivmedium, auf dem fast nur **grampositive Bakterien** (wie Staphylokokken oder Streptokokken) wachsen.
+        
+        **Warum nutzen wir mehrere?** Wenn etwas auf CNA wächst, aber nicht auf MAC, wissen wir sofort: Es ist grampositiv!
+        """)
+
+    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🧫 Kultur & Tests</h1></div>""", unsafe_allow_html=True)
+  
     st.markdown("""
     <div class="screen-box">
         <h1 style="text-align:center;">🧫 Kultur & Tests</h1>
@@ -1235,12 +1250,27 @@ elif st.session_state.screen == "agar":
 # -------------------------
 # MIKROSKOP SCREEN hier können die Spieler den mikroskopischen Eindruck der Probe sehen und danach die Gram-Färbung durchführen, indem sie die Schritte in der richtigen Reihenfolge auswählen. Es gibt auch einen Zurück-Button, um zurück zum Labor zu gelangen.
 # -------------------------
+# --- MIKROSKOP SCREEN UPDATE ---
 elif st.session_state.screen == "mikroskop":
     case = st.session_state.case
 
     if st.button("← Zurück zum Labor", key=f"back_from_mic_{case}"):
         st.session_state.screen = "lab"
         st.rerun()
+
+    # GLÜHBIRNE / HILFE SEKTION
+    with st.expander("💡 Wissen: Warum färben wir Bakterien?", expanded=False):
+        st.markdown("""
+        ### 🔬 Die Gram-Färbung
+        Bakterien sind unter dem Mikroskop fast farblos. Die Gram-Färbung ist der wichtigste erste Schritt der Diagnose:
+        
+        1.  **Gram-positiv (Blau/Violett):** Diese Bakterien haben eine dicke Zellwand, die den Farbstoff festhält.
+        2.  **Gram-negativ (Rot/Pink):** Diese haben eine dünne Wand und eine zusätzliche Fettschicht. Der blaue Farbstoff wird ausgewaschen und sie werden mit Safranin gegengefärbt.
+        
+        **Formen:** Wir achten auch auf die Form (**Kokken** = Kügelchen, **Stäbchen**) und die Anordnung (**Haufen** wie Weintrauben oder **Ketten**).
+        """)
+
+    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🔬 Mikroskop</h1></div>""", unsafe_allow_html=True)
 
     st.markdown("""
     <div class="screen-box">
@@ -1374,14 +1404,25 @@ elif st.session_state.screen == "mikroskop":
 # -------------------------
 # BLUTANALYSE SCREEN
 # -------------------------
+# --- BLUTANALYSE SCREEN UPDATE ---
 elif st.session_state.screen == "blutbild":
     case = st.session_state.case
-    values = blood_values[case]
-    diff = blood_diff[case]
 
     if st.button("← Zurück zum Labor", key=f"back_from_blood_{case}"):
         st.session_state.screen = "lab"
         st.rerun()
+
+    # GLÜHBIRNE / HILFE SEKTION
+    with st.expander("💡 Wissen: Was bedeuten diese Blutwerte?", expanded=False):
+        st.markdown("""
+        ### 🩸 Entzündungsmarker im Check
+        *   **CRP (C-reaktives Protein):** Ein allgemeiner Alarmwert. Er steigt bei fast jeder Entzündung an. Werte über 100 mg/L deuten oft auf eine schwere bakterielle Infektion hin.
+        *   **PCT (Procalcitonin):** Der "Spezialist" für Bakterien. Ist PCT hoch, ist eine bakterielle Infektion (oder sogar eine Sepsis) sehr wahrscheinlich. Bei Viren bleibt PCT meist niedrig.
+        *   **Leukozyten:** Die "Polizei" des Körpers. Viel Arbeit (Infektion) = Viele Polizisten (hohe Werte).
+        *   **Differentialblutbild:** Hier schauen wir, *welche* Polizisten da sind. **Neutrophile** kämpfen gegen Bakterien, **Lymphozyten** eher gegen Viren, **Eosinophile** gegen Parasiten.
+        """)
+
+    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🩸 Blutanalyse</h1></div>""", unsafe_allow_html=True)
 
     st.markdown("""
     <div class="screen-box">
