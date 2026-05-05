@@ -1125,12 +1125,12 @@ elif st.session_state.screen == "agar":
         "Fall 3": {
             "COS": "images/fall3_cos.png",
             "MAC": "images/fall3_mac.png",
-            "CNA": "images/fallleer_cna.png"
+            "CNA": "images/fallleer_mac.png"
         },
         "Fall 4": {
             "COS": "images/fallleer_cos.png",
             "MAC": "images/fallleer_mac.png",
-            "CNA": "images/fallleer_cna.png"
+            "CNA": "images/fallleer_mac.png"
         },
         "Fall 5": {
             "COS": "images/fall5_cos.png",
@@ -1140,7 +1140,7 @@ elif st.session_state.screen == "agar":
         "Fall 6": {
             "COS": "images/fall6_cos.png",
             "MAC": "images/fallleer_mac.png",
-            "CNA": "images/fallleer_cna.png"
+            "CNA": "images/fallleer_mac.png"
         }
     }
 
