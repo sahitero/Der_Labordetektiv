@@ -793,13 +793,13 @@ def interpret_blood(diff: dict) -> list[str]:
     eos = float(diff.get("Eosinophile (%)", 0))
 
     if neut >= 70:
-        hints.append("🧠 Neutrophile ↑ → spricht eher für **bakterielle** Ursache (akut).")
+        hints.append("Neutrophile ↑ → spricht eher für bakterielle Ursache (akut)")
     if lymph >= 45:
-        hints.append("🧠 Lymphozyten ↑ → spricht eher für **virale** Ursache.")
+        hints.append("Lymphozyten ↑ → spricht eher für virale Ursache")
     if eos >= 6:
-        hints.append("🧠 Eosinophile ↑ → spricht für **Parasiten** oder **Allergie/Überempfindlichkeit**.")
+        hints.append("Eosinophile ↑ → spricht für Parasiten oder Allergie/ Überempfindlichkeit")
     if not hints:
-        hints.append("🧠 Differentialblutbild: kein klarer Hinweis → Kontext/weitere Tests wichtig.")
+        hints.append("Differentialblutbild: kein klarer Hinweis → Kontext/ weitere Tests wichtig")
     return hints
 
 def interpret_micro(mt: dict) -> list[str]:
@@ -809,17 +809,17 @@ def interpret_micro(mt: dict) -> list[str]:
     koa = mt.get("Koagulase", "").lower()
 
     if "gram-positiv" in gram and "kokken" in gram and "haufen" in gram and "positiv" in kat:
-        hints.append("🧠 Gram+ Kokken in Haufen + Katalase+ → **Staphylokokken**.")
+        hints.append("Grampositive Kokken in Haufen + Katalase positiv = Staphylokokken")
         if "positiv" in koa:
-            hints.append("🧠 Koagulase+ → Hinweis auf **Staphylococcus aureus**.")
+            hints.append("Koagulase positiv = Hinweis auf Staphylococcus aureus")
         elif "negativ" in koa:
-            hints.append("🧠 Koagulase− → eher **Staphylococcus epidermidis**.")
+            hints.append("Koagulase negativ = eher Staphylococcus epidermidis")
 
     if "ketten" in gram and "negativ" in kat:
-        hints.append("🧠 Gram+ Kokken in Ketten + Katalase− → Hinweis auf **Streptokokken**.")
+        hints.append("Grampositive Kokken in Ketten + Katalase negativ = Hinweis auf Streptokokken")
 
     if not hints:
-        hints.append("🧠 Mikrotests: kein eindeutiger Shortcut → Kultur/weitere Schritte beachten.")
+        hints.append("Mikrotests: kein eindeutiger Shortcut = Kultur/ weitere Schritte beachten")
     return hints
 
 def reset_gram_game():
