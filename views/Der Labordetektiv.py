@@ -856,28 +856,36 @@ if st.session_state.screen == "home":
     # Abstand nach oben
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-    # Titel
+#Titel
+# Titel mit eigenem weißen Balken
     st.markdown("""
-    <div style='text-align:center;'>
+    <div style='text-align: center;'>
 
+    <!-- Nur die Überschrift bekommt den Balken -->
     <h1 style='
-        font-size:65px;
-        color:#4B0082;
-        font-weight:900;
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 30px;
+        border-radius: 15px;
+        font-size: 65px;
+        color: #4B0082;
+        font-weight: 900;
+        margin-bottom: 20px;
     '>
-    🧪 Lab Diagnose Game
+        Lab Diagnose Game
     </h1>
 
+    <!-- Der Untertext steht darunter auf dem pinken Hintergrund -->
     <p style='
-        font-size:28px;
-        color:#5A2D82;
+        font-size: 28px;
+        color: #5A2D82;
+        font-weight: 500;
     '>
-    Willkommen im biomedizinischen Labor!
+        Willkommen im biomedizinischen Labor!
     </p>
 
     </div>
     """, unsafe_allow_html=True)
-
 
     # Score mittig
     st.markdown(f"""
@@ -889,7 +897,7 @@ if st.session_state.screen == "home":
         margin-top:20px;
     '>
 
-    🎯 Score: {st.session_state.score}
+    Score: {st.session_state.score}
 
     </div>
     """, unsafe_allow_html=True)

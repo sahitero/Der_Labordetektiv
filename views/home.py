@@ -1,5 +1,12 @@
 import streamlit as st
 
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #FFC0CB;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 # -------------------------
 # HOME SCREEN
 # -------------------------
