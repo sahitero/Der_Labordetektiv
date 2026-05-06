@@ -17,6 +17,7 @@ def get_base64(file_path):
 # =========================================================
 # 1) CSS STYLES # Hier werden alle CSS-Styles definiert, die das Aussehen der App bestimmen.
 # =========================================================
+st.markdown('<div id="top"></div>', unsafe_allow_html=True) # Ein unsichtbares Element am Anfang der Seite, das als Anker für die "Nach oben"-Funktion dient. Wenn die Spieler auf einen "Nach oben"-Button klicken, können sie direkt zu diesem Element springen und so schnell zum Anfang der Seite zurückkehren.  `)
 st.markdown("""
 <style>
 /* App Hintergrund: De ganze Hintergrund wird in sone pinklichi farb */
@@ -1192,6 +1193,7 @@ elif st.session_state.screen == "agar":
             "CNA": "Kaum oder kein Wachstum"
         }
     }
+    plate = st.session_state.get("selected_plate")
 
     if plate is not None:
         image_path = plate_images[case][plate]
