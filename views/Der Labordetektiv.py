@@ -111,6 +111,7 @@ div.stButton > button:hover div {
     box-shadow: 0px 6px 16px rgba(0,0,0,0.08);
     font-weight: 800;
     color: #4B0082 !important;
+    margin-bottom: 5px;
 }
 .header-score {
     background-color: #E6F7FF;
@@ -971,7 +972,7 @@ elif st.session_state.screen == "lab":
     st.markdown(f'<div class="header-score">🎯 Score: {st.session_state.score}</div>', unsafe_allow_html=True)
     st.markdown('</div></div></div>', unsafe_allow_html=True)
 
-    # --- 2. SÜSSES DROPDOWN FÜR DIE PATIENTENAKTE ---
+    # --- 2. DROPDOWN FÜR DIE PATIENTENAKTE ---
     # Hier werden die Patientendaten in einem süßen Dropdown angezeigt, damit die Spieler jederzeit auf die Informationen zugreifen können, ohne dass sie den Überblick verlieren. Die Informationen sollten klar und übersichtlich dargestellt werden, damit die Spieler sie leicht verstehen und in ihre Diagnosen einbeziehen können.
     with st.expander(f"📖 Patientenakte von {data['name']} nachlesen", expanded=False):
         st.markdown(f"""
@@ -992,6 +993,7 @@ elif st.session_state.screen == "lab":
 
     with col1:
         st.markdown(f'<div class="station-card"><div class="station-icon">🔬</div><div class="station-title">Mikroskop</div><div class="station-sub">Gram-Färbung</div><div class="station-badge">{"✅ Offen" if st.session_state.unlocked["Mikroskop"] else "🔒 Zu"}</div></div>', unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 18px;'></div>", unsafe_allow_html=True)
         if st.button("Mikroskop öffnen", key="btn_mic", use_container_width=True):
             st.session_state.unlocked["Mikroskop"] = True
             st.session_state.screen = "mikroskop"
@@ -999,6 +1001,7 @@ elif st.session_state.screen == "lab":
 
     with col2:
         st.markdown(f'<div class="station-card"><div class="station-icon">🧫</div><div class="station-title">Kultur & Tests</div><div class="station-sub">Agarplatten</div><div class="station-badge">{"✅ Offen" if st.session_state.unlocked["Kultur & Tests"] else "🔒 Zu"}</div></div>', unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 18px;'></div>", unsafe_allow_html=True)
         if st.button("Kultur öffnen", key="btn_cul", use_container_width=True):
             st.session_state.unlocked["Kultur & Tests"] = True
             st.session_state.screen = "agar"
@@ -1006,6 +1009,7 @@ elif st.session_state.screen == "lab":
 
     with col3:
         st.markdown(f'<div class="station-card"><div class="station-icon">🩸</div><div class="station-title">Blutanalyse</div><div class="station-sub">Laborwerte</div><div class="station-badge">{"✅ Offen" if st.session_state.unlocked["Blutanalyse"] else "🔒 Zu"}</div></div>', unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 18px;'></div>", unsafe_allow_html=True)
         if st.button("Blut öffnen", key="btn_bld", use_container_width=True):
             st.session_state.unlocked["Blutanalyse"] = True
             st.session_state.screen = "blutbild"
