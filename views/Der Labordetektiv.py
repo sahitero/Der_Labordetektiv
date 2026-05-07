@@ -1084,8 +1084,6 @@ elif st.session_state.screen == "agar":
         
         **Warum nutzen wir mehrere?** Wenn etwas auf CNA wächst, aber nicht auf MAC, wissen wir sofort: Es ist grampositiv!
         """)
-
-    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🧫 Kultur & Tests</h1></div>""", unsafe_allow_html=True)
   
     st.markdown("""
     <div class="screen-box">
@@ -1280,8 +1278,6 @@ elif st.session_state.screen == "mikroskop":
         **Formen:** Wir achten auch auf die Form (**Kokken** = Kügelchen, **Stäbchen**) und die Anordnung (**Haufen** wie Weintrauben oder **Ketten**).
         """)
 
-    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🔬 Mikroskop</h1></div>""", unsafe_allow_html=True)
-
     st.markdown("""
     <div class="screen-box">
         <h1 style="text-align:center;">🔬 Mikroskop</h1>
@@ -1432,7 +1428,6 @@ elif st.session_state.screen == "blutbild":
         *   **Differentialblutbild:** Hier schauen wir, *welche* Polizisten da sind. **Neutrophile** kämpfen gegen Bakterien, **Lymphozyten** eher gegen Viren, **Eosinophile** gegen Parasiten.
         """)
 
-    st.markdown("""<div class="screen-box"><h1 style="text-align:center;">🩸 Blutanalyse</h1></div>""", unsafe_allow_html=True)
 
     st.markdown("""
     <div class="screen-box">
@@ -1518,6 +1513,11 @@ elif st.session_state.screen == "blutbild":
 
                     st.session_state.hema_done = True
                     st.rerun()
+
+        values = blood_values.get(case, {})
+        diff = blood_diff.get(case, {})
+        
+
 
     if st.session_state.chem_done:
         st.subheader("🧪 Chemie-Resultate")
