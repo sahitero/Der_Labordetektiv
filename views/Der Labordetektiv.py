@@ -32,11 +32,13 @@ h1, p, span, div {
 
 /*Standard Cards: Design für die Patientenakte/Informationen*/
 .cute-card {
-    background-color: #FFE4F1;
+    background-color: #EFDCE6;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
     margin-bottom: 12px;
+    widht: 100%;
+    box-sizing: border-box;
 }
             
 /* Design für die Ergebnisse fo de Tests, z.Bsp. Mikroskopischer Eindruck, Agarplatten-Ergebnisse, Blutwerte */           
@@ -345,6 +347,13 @@ st.markdown("""
 
 .soft-divider {
     height: 14px;
+}
+            
+/* Design für Dropdown der Patientenakte */
+            summary {
+    background-color: #EFDCE6 !important;
+    border-radius: 15px !important;
+    color: #4B0082 !important;
 }
 
 /* --- Floating Lab Elements --- */
