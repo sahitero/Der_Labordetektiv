@@ -1030,9 +1030,8 @@ elif st.session_state.screen == "lab":
     left_col, right_col = st.columns([1.5, 1], gap="large")
 
     with left_col:
-        st.write("### 📓 Laborjournal")
         journal = st.session_state.lab_journal
-        journal_html = '<div class="journal-card"><div class="journal-title">📓 Mein Laborheft</div>'
+        journal_html = '<div class="journal-card"><div class="journal-title">📓 Mein Laborjournal</div>'
         if any(journal.values()):
             for sec, entries in journal.items():
                 if entries:
