@@ -566,7 +566,7 @@ cases = {
     },
 
     "Fall 6": {
-        "story": "Eine Patientin berichtet über Juckreiz und einen weisslichen Belag im Mundbereich. "
+        "story": "Eine Patientin berichtet über Juckreiz und einen weisslichen Belag im Mund- und Intimbereich. "
                  "Die Beschwerden bestehen seit einigen Tagen.",
         "name": "Kelly Keller",
         "age": 29,
