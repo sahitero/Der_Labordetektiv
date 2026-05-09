@@ -956,6 +956,16 @@ elif st.session_state.screen == "level":
             label = f"{case_key} - {case_preview[case_key]}"
             if st.button(label, key=f"btn_{case_key}"):
                 st.session_state.case = case_key
+                st.session_state.lab_journal = {
+                    "Mikroskop": [],
+                    "Blutanalyse": [],
+                    "Kultur & Tests": []
+}
+                st.session_state.unlocked = {
+                    "Mikroskop": False,
+                    "Blutanalyse": False,
+                    "Kultur & Tests": False
+}
                 st.session_state.screen = "lab"
                 st.session_state.feedback = None
                 st.session_state.selected_plate = None
@@ -1248,11 +1258,14 @@ elif st.session_state.screen == "agar":
             # Wir sammeln die Infos der aktuellen Platte
             neue_infos = [
                 f"Platte {plate}: {text}",
-                f"Gram-Check: {mt['Gram']}",
-                f"Schnelltests: Kat({mt['Katalase']}), Koag({mt['Koagulase']}), Hämolyse({mt['Hämolyse']})"
+                f"Gram-Check: {mt.get('Gram', 'nicht durchgeführt/keine Angabe')}",
+                f"Schnelltests: Kat({mt.get('Katalase', 'nicht durchgeführt/keine Angabe')}), Koag({mt.get('Koagulase', 'nicht durchgeführt/keine Angabe')}), Hämolyse({mt.get('Hämolyse', 'nicht durchgeführt/keine Angabe')})"
             ]
             
             # Wir hängen sie an die Liste an, falls sie noch nicht drin sind
+            if "Kultur & Tests" not in st.session_state.lab_journal:
+                st.session_state.lab_journal["Kultur & Tests"] = []
+
             for info in neue_infos:
                 if info not in st.session_state.lab_journal["Kultur & Tests"]:
                     st.session_state.lab_journal["Kultur & Tests"].append(info)
@@ -1405,7 +1418,9 @@ elif st.session_state.screen == "mikroskop":
     st.write("---")
 
     if st.button("📓 Mikroskop-Befund ins Laborjournal übernehmen", key=f"journal_micro_{case}"):
-        st.session_state.lab_journal["Mikroskop"] = []
+        
+        if "Mikroskop" not in st.session_state.lab_journal:
+            st.session_state.lab_journal["Mikroskop"] = []
 
         if st.session_state.gram_result and st.session_state.gram_result != "Reihenfolge nicht korrekt":
             st.session_state.lab_journal["Mikroskop"].append(
@@ -1591,6 +1606,9 @@ elif st.session_state.screen == "blutbild":
 
                     for hinweis in interpret_blood(diff):
                         neue_eintraege.append(hinweis)
+
+                if "Blutanalyse" not in st.session_state.lab_journal:
+                    st.session_state.lab_journal["Blutanalyse"] = []
 
                 for eintrag in neue_eintraege:
                     if eintrag not in st.session_state.lab_journal["Blutanalyse"]:
