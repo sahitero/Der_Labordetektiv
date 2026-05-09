@@ -257,6 +257,26 @@ div.stButton > button:hover div {
     color: #4B0082 !important;
 }
             
+/* Dropdown komplett einfärben */
+div[data-testid="stExpander"] {
+    background-color: #EFDCE6 !important;
+    border-radius: 20px !important;
+    border: 2px solid #E7A7C4 !important;
+    overflow: hidden !important;
+}
+
+/* Dropdown-Kopf */
+div[data-testid="stExpander"] summary {
+    background-color: #EFDCE6 !important;
+    border-radius: 20px !important;
+}
+
+/* Dropdown-Inhalt */
+div[data-testid="stExpander"] div[role="region"] {
+    background-color: #EFDCE6 !important;
+    padding: 15px !important;
+}
+            
 /* Laborjournal */ /* Design für die Einträge im Laborjournal*/
 .journal-card {
     background: #FFF8DC;
@@ -349,12 +369,6 @@ st.markdown("""
     height: 14px;
 }
             
-/* Design für Dropdown der Patientenakte */
-            summary {
-    background-color: #EFDCE6 !important;
-    border-radius: 15px !important;
-    color: #4B0082 !important;
-}
 
 /* --- Floating Lab Elements --- */
 
@@ -1253,24 +1267,38 @@ elif st.session_state.screen == "agar":
         st.write("---")
 
 # --- NEUER CODE FÜR AGAR-JOURNAL ---
-        if st.button("📓 Befunde ins Laborjournal übernehmen", key=f"journal_agar_{case}"):
-            # Wir sammeln die Infos der aktuellen Platte
-            neue_infos = [
-                f"Platte {plate}: {text}",
-                f"Gram-Check: {mt.get('Gram', 'nicht durchgeführt/keine Angabe')}",
-                f"Schnelltests: Kat({mt.get('Katalase', 'nicht durchgeführt/keine Angabe')}), Koag({mt.get('Koagulase', 'nicht durchgeführt/keine Angabe')}), Hämolyse({mt.get('Hämolyse', 'nicht durchgeführt/keine Angabe')})"
-            ]
-            
-            # Wir hängen sie an die Liste an, falls sie noch nicht drin sind
-            if "Kultur & Tests" not in st.session_state.lab_journal:
-                st.session_state.lab_journal["Kultur & Tests"] = []
+    if st.button("📓 Befunde ins Laborjournal übernehmen", key=f"journal_agar_{case}"):
 
-            for info in neue_infos:
-                if info not in st.session_state.lab_journal["Kultur & Tests"]:
-                    st.session_state.lab_journal["Kultur & Tests"].append(info)
-            
-            st.success(f"✅ Befunde von {plate} wurden ins Journal eingetragen!")
-        # --- ENDE NEUER CODE ---
+        # Falls die Kategorie noch nicht existiert, wird sie erstellt
+        if "Kultur & Tests" not in st.session_state.lab_journal:
+            st.session_state.lab_journal["Kultur & Tests"] = []
+
+        # Wir sammeln die Infos ALLER Platten
+        neue_infos = []
+
+        for aktuelle_platte in ["COS", "MAC", "CNA"]:
+
+            platten_text = agar_results[case][aktuelle_platte]
+
+            neue_infos.append(
+                f"Platte {aktuelle_platte}: {platten_text}"
+        )
+
+    # Schnelltests nur einmal ergänzen, da sie sich nicht mit der Plattenwahl ändern
+        neue_infos.append(
+            f"Schnelltests: Kat({mt.get('Katalase', 'nicht durchgeführt/keine Angabe')}), "
+            f"Koag({mt.get('Koagulase', 'nicht durchgeführt/keine Angabe')}), "
+            f"Hämolyse({mt.get('Hämolyse', 'nicht durchgeführt/keine Angabe')})"
+        )
+
+        # Wir hängen alles an die Liste an, falls es noch nicht drin ist
+        for info in neue_infos:
+            if info not in st.session_state.lab_journal["Kultur & Tests"]:
+                st.session_state.lab_journal["Kultur & Tests"].append(info)
+
+        st.success("✅ Alle Agar-Befunde wurden ins Journal eingetragen!")
+    # --- ENDE NEUER CODE ---
+        
     else:
         st.markdown("""
         <div class="hint-card">
@@ -1422,7 +1450,7 @@ elif st.session_state.screen == "mikroskop":
 
         if st.session_state.gram_result and st.session_state.gram_result != "Reihenfolge nicht korrekt":
             st.session_state.lab_journal["Mikroskop"].append(
-                f"Mikroskopischer Eindruck: {microscope_info[case]['view']}"
+                f"{microscope_info[case]['view']}"
             )
             st.session_state.lab_journal["Mikroskop"].append(
                 f"Gram-Ergebnis: {st.session_state.gram_result}"
