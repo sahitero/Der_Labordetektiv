@@ -32,11 +32,11 @@ h1, p, span, div {
 
 /*Standard Cards: Design für die Patientenakte/Informationen*/
 .cute-card {
-    background-color: #EFDCE6;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
-    margin-bottom: 12px;
+    background-color: #FFF0F7;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
+    margin-bottom: 15px;
     widht: 100%;
     box-sizing: border-box;
 }
@@ -990,12 +990,10 @@ elif st.session_state.screen == "lab":
     st.markdown(f'<div class="header-score">🎯 Score: {st.session_state.score}</div>', unsafe_allow_html=True)
     st.markdown('</div></div></div>', unsafe_allow_html=True)
 
-    # --- 2. DROPDOWN FÜR DIE PATIENTENAKTE ---
-    # Hier werden die Patientendaten in einem süssen Dropdown angezeigt, damit die Spieler jederzeit auf die Informationen zugreifen können, ohne dass sie den Überblick verlieren. Die Informationen sollten klar und übersichtlich dargestellt werden, damit die Spieler sie leicht verstehen und in ihre Diagnosen einbeziehen können.
-    with st.expander(f"📖 Patientenakte von {data['name']} nachlesen", expanded=False):
-        st.markdown(f"""
+    # Die Patientenakte mit den wichtigsten Informationen fürs Spiel
+    st.markdown(f"""
         <div class="cute-card">
-            <h4>📄 Anamnese & Bericht</h4>
+            <h4>🩺 Patientenfall</h4>
             <p style="font-style: italic;">"{data['story']}"</p>
             <hr>
             <b>Patient:</b> {data['name']} ({data['age']} Jahre, {data['sex']})<br>
@@ -1443,17 +1441,6 @@ elif st.session_state.screen == "blutbild":
         st.session_state.screen = "lab"
         st.rerun()
 
-    # GLÜHBIRNE / HILFE SEKTION
-    with st.expander("💡 Wissen: Was bedeuten diese Blutwerte?", expanded=False):
-        st.markdown("""
-        ### 🩸 Entzündungsmarker im Check
-        *   **CRP (C-reaktives Protein):** Ein allgemeiner Alarmwert. Er steigt bei fast jeder Entzündung an. Werte über 100 mg/L deuten oft auf eine schwere bakterielle Infektion hin.
-        *   **PCT (Procalcitonin):** Der "Spezialist" für Bakterien. Ist PCT hoch, ist eine bakterielle Infektion (oder sogar eine Sepsis) sehr wahrscheinlich. Bei Viren bleibt PCT meist niedrig.
-        *   **Leukozyten:** Die "Polizei" des Körpers. Viel Arbeit (Infektion) = Viele Polizisten (hohe Werte).
-        *   **Differentialblutbild:** Hier schauen wir, *welche* Polizisten da sind. **Neutrophile** kämpfen gegen Bakterien, **Lymphozyten** eher gegen Viren, **Eosinophile** gegen Parasiten.
-        """)
-
-
     st.markdown("""
     <div class="screen-box">
         <h1 style="text-align:center;">🩸 Blutanalyse</h1>
@@ -1466,6 +1453,18 @@ elif st.session_state.screen == "blutbild":
     🧪 <b>Hinweis:</b> Achte auf erhöhte Entzündungswerte und Veränderungen im Differentialblutbild.
     </div>
     """, unsafe_allow_html=True)
+
+    # GLÜHBIRNE / HILFE SEKTION
+    with st.expander("💡 Wissen: Was bedeuten diese Blutwerte?", expanded=False):
+        st.markdown("""
+        ### 🩸 Entzündungsmarker im Check
+        *   **CRP (C-reaktives Protein):** Ein allgemeiner Alarmwert. Er steigt bei fast jeder Entzündung an. Werte über 100 mg/L deuten oft auf eine schwere bakterielle Infektion hin.
+        *   **PCT (Procalcitonin):** Der "Spezialist" für Bakterien. Ist PCT hoch, ist eine bakterielle Infektion (oder sogar eine Sepsis) sehr wahrscheinlich. Bei Viren bleibt PCT meist niedrig.
+        *   **Leukozyten:** Die "Polizei" des Körpers. Viel Arbeit (Infektion) = Viele Polizisten (hohe Werte).
+        *   **Differentialblutbild:** Hier schauen wir, *welche* Polizisten da sind. **Neutrophile** kämpfen gegen Bakterien, **Lymphozyten** eher gegen Viren, **Eosinophile** gegen Parasiten.
+        """)
+
+    st.markdown("---")
 
     st.subheader("⚙️ Analyseablauf")
 
@@ -1542,7 +1541,7 @@ elif st.session_state.screen == "blutbild":
         values = blood_values.get(case, {})
         diff = blood_diff.get(case, {})
         
-
+    st.markdown("---")
 
     if st.session_state.chem_done:
         st.subheader("🧪 Chemie-Resultate")
@@ -1593,6 +1592,8 @@ elif st.session_state.screen == "blutbild":
             🌟 Beide Geräte haben die Probe erfolgreich ausgewertet. Jetzt kannst du die Befunde ins Laborjournal übernehmen.
             </div>
             """, unsafe_allow_html=True)
+
+            st.markdown("---")
 
             if st.button("📓 Ins Laborjournal übernehmen", key=f"journal_blood_{case}"):
                 neue_eintraege = []
