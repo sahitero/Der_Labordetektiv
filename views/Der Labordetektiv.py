@@ -1,11 +1,8 @@
 import streamlit as st
 import pandas as pd
 import base64 # Für die Einbindung von Bildern in den App-Header
-import time # Für die Simulation von Ladezeiten oder Verzögerungen, z.B. beim Öffnen der Laborstationen oder beim Anzeigen von Ergebnissen, um ein realistischeres Erlebnis zu schaffen.
+import time # Für kleinde Ladeanimationen und Verzögerungen (Analyzer)
 
-
-# Diese Zeile stellt die App auf die volle Breite ein
-# st.set_page_config(layout="wide", page_title="Der Labordetektiv", page_icon="🔬")
 
 # base64 Funktion für die Einbindung von Bildern in den App-Header
 def get_base64(file_path):
@@ -15,33 +12,37 @@ def get_base64(file_path):
 # Bild wird in Text umgewandelt, damit er im App-Header eingebunden werden kann. CSS kann diesen Text direkt als Hintergrund verwenden
 
 # =========================================================
-# 1) CSS STYLES # Hier werden alle CSS-Styles definiert, die das Aussehen der App bestimmen.
+# 1) CSS STYLES
 # =========================================================
-st.markdown('<div id="top"></div>', unsafe_allow_html=True) # Ein unsichtbares Element am Anfang der Seite, das als Anker für die "Nach oben"-Funktion dient. Wenn die Spieler auf einen "Nach oben"-Button klicken, können sie direkt zu diesem Element springen und so schnell zum Anfang der Seite zurückkehren.  `)
+
+# Anker für "Nach oben"-Funktion
+st.markdown('<div id="top"></div>', unsafe_allow_html=True)
+
 st.markdown("""
 <style>
-/* App Hintergrund: De ganze Hintergrund wird in sone pinklichi farb */
+
+/* App-Hintergrund */
 .stApp {
     background-color: #FFB3D1;
 }
 
-/* Globale Textfarben: Es isch sone dunkles Lila aber im moment sind es paar Problemi bim drufklicke ksed man nid was es isch*/
+/* Globale Textfarbe */
 h1, p, span, div {
     color: #4B0082 !important;
 }
 
-/*Standard Cards: Design für die Patientenakte/Informationen*/
+/* Standard-Cards, z.B. Patientenakte */
 .cute-card {
     background-color: #FFF0F7;
     padding: 25px;
     border-radius: 25px;
     box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
     margin-bottom: 15px;
-    widht: 100%;
+    width: 100%;
     box-sizing: border-box;
 }
-            
-/* Design für die Ergebnisse von den Tests, z.Bsp. Mikroskopischer Eindruck, Agarplatten-Ergebnisse, Blutwerte */           
+
+/* Ergebnis-Cards, z.B. Mikroskop, Agarplatten, Blutwerte */
 .result-card {
     background-color: #E6F7FF;
     padding: 15px;
@@ -49,8 +50,9 @@ h1, p, span, div {
     margin-bottom: 10px;
     box-shadow: 0px 3px 10px rgba(0,0,0,0.06);
 }
-            
-/* Design für die Hinweise
+
+/* Hinweis-Cards */
+.hint-card {
     background-color: #F3E8FF;
     padding: 12px 14px;
     border-radius: 18px;
@@ -58,299 +60,427 @@ h1, p, span, div {
     box-shadow: 0px 3px 10px rgba(0,0,0,0.06);
 }
 
-/* Standard Buttons */
+/* Standard-Buttons */
 div.stButton > button {
     background-color: #FFD6E8;
-    color: #4B0082 !important; /* Lila Text auf hellem Grund */
+    color: #4B0082 !important;
     border-radius: 22px;
     border: none;
     padding: 0.6em 1.1em;
     font-weight: 700;
 }
 
-/* Hover-Effekt fixen */
+/* Button Hover-Effekt */
 div.stButton > button:hover {
-    background-color: #4B0082 !important; /* Dunkler Hintergrund */
-    color: white !important; /* WEISSER Text, damit man ihn sieht! */
+    background-color: #4B0082 !important;
+    color: white !important;
 }
-
-/* Verhindert, dass die globalen lila Textregeln den Button-Text beim Hover überschreiben */
-div.stButton > button:hover p, 
-div.stButton > button:hover span, 
+/* Verhindert, dass globale Textfarben den Hover überschreiben */
+div.stButton > button:hover p,
+div.stButton > button:hover span,
 div.stButton > button:hover div {
     color: white !important;
 }
 
-/* Sticky App Header*/ /* Design für den App-Header, der auf allen Screens sichtbar ist. Er enthält den aktuellen Fallnamen, den Score und einen Button, um zurück zur Fallauswahl zu gelangen. Der Header ist sticky, damit er immer sichtbar bleibt, auch wenn die Spieler nach unten scrollen. Ein halbtransparenter Hintergrund mit einem leichten Blur-Effekt sorgt dafür, dass der Header sich vom restlichen Inhalt abhebt, ohne zu dominant zu wirken. */
+/* =========================================================
+   Sticky App Header
+========================================================= */
+
 .app-header {
     position: sticky;
     top: 0;
     z-index: 999;
+
     background: rgba(255, 179, 209, 0.95);
     backdrop-filter: blur(8px);
+
     padding: 10px 6px 12px 6px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
     margin-bottom: 10px;
+
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
+
+/* Header Layout */
 .header-row {
     display: flex;
-    gap: 10px;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     flex-wrap: wrap;
 }
+
 .header-left {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
     flex-wrap: wrap;
 }
+
+/* Fallname */
 .header-pill {
     background-color: #F3E8FF;
     border-radius: 999px;
     padding: 6px 12px;
+
     display: inline-block;
-    box-shadow: 0px 6px 16px rgba(0,0,0,0.08);
+
     font-weight: 800;
     color: #4B0082 !important;
+
+    box-shadow: 0px 6px 16px rgba(0,0,0,0.08);
+
     margin-bottom: 5px;
 }
+
+/* Score-Anzeige */
 .header-score {
     background-color: #E6F7FF;
     border-radius: 999px;
     padding: 6px 12px;
+
     display: inline-block;
-    box-shadow: 0px 6px 16px rgba(0,0,0,0.08);
+
     font-weight: 800;
     color: #4B0082 !important;
+
+    box-shadow: 0px 6px 16px rgba(0,0,0,0.08);
 }
+
+/* Header-Buttons */
 .app-header div.stButton > button {
     background-color: #FFE4F1 !important;
     color: #4B0082 !important;
+
     border-radius: 999px !important;
-    padding: 0.45em 1.0em !important;
-    font-weight: 800 !important;
     border: none !important;
+
+    padding: 0.45em 1em !important;
+
+    font-weight: 800 !important;
+
     box-shadow: 0px 6px 16px rgba(0,0,0,0.08) !important;
 }
+
+/* Hover-Effekt */
 .app-header div.stButton > button:hover {
     background-color: #4B0082 !important;
     color: white !important;
 }
+            
+/* =========================================================
+   Laborstationen im Lab-Screen
+========================================================= */
 
-/* Laborstationen im Lab-Screen */ /* Design für die Karten, die die verschiedenen Laborstationen repräsentieren (Mikroskop, Agarplatten, Blutanalyse). Jede Karte hat ein eigenes Farbschema, das sie von den anderen unterscheidet, aber alle Karten haben einen ähnlichen Stil mit abgerundeten Ecken, Schatten und einem klaren Layout, um die Informationen übersichtlich darzustellen. Die Karten enthalten auch einen Titel, eine kurze Beschreibung und einen Button, um die Station zu betreten. */
+/* Karten der Laborstationen */
 .station-card {
     background: #FFE4F1;
     border-radius: 26px;
     padding: 20px 18px;
-    box-shadow: 0px 8px 18px rgba(0,0,0,0.08);
-    border: 1px solid rgba(75, 0, 130, 0.08);
+
     min-height: 260px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     text-align: left;
+
+    border: 1px solid rgba(75, 0, 130, 0.08);
+    box-shadow: 0px 8px 18px rgba(0,0,0,0.08);
 }
-            
-/* Die Icons fo de Stationen, die ein visuelles Element hinzufügen und die Stationen leichter erkennbar  */
+
+/* Icons der Stationen */
 .station-icon {
     font-size: 34px;
     margin-bottom: 8px;
 }
-            
-/* Die Titel der Stationen, die den Namen der Station enthalten. */
+
+/* Titel der Stationen */
 .station-title {
-    font-weight: 900;
     font-size: 20px;
+    font-weight: 900;
     line-height: 1.2;
+
     margin-bottom: 10px;
+
     color: #4B0082 !important;
 }
 
-/* Die Untertitel der Stationen, die eine kurze Beschreibung der Station enthalten. */                       
+/* Beschreibung der Stationen */
 .station-sub {
     font-size: 15px;
     line-height: 1.65;
-    color: #6A3FA0 !important;
+
     margin-bottom: 14px;
+
+    color: #6A3FA0 !important;
 }
-            
- /* Die Badges, die den Status der Station anzeigen (z.B. "Freigeschaltet", "Neu", "Abgeschlossen"). Sie sollten auffällig und einladend gestaltet sein, damit die Spieler sofort erkennen, ob die Station verfügbar ist oder nicht. Ein helles Blau mit einem dunklen Lila Text sorgt für einen guten Kontrast und macht die Badges gut lesbar.           
+
+/* Status-Badges */
 .station-badge {
     display: inline-block;
+
+    width: fit-content;
+
     background: #E6F7FF;
-    padding: 7px 12px;
     border-radius: 999px;
+
+    padding: 7px 12px;
+
     font-size: 13px;
     font-weight: 800;
+
     color: #4B0082 !important;
-    width: fit-content;
+
     margin-top: auto;
 }
-/* Der Abstand zwischen den Stationen, damit die Karten nicht zu dicht beieinander stehen und die Spieler genug Platz haben, um die Informationen auf jeder Karte zu erfassen. Ein Abstand von 14px sorgt für eine angenehme visuelle Trennung zwischen den Stationen, ohne dass sie zu weit auseinander stehen.            
+
+/* Abstand zwischen den Karten */
 .station-wrap {
     margin-bottom: 14px;
 }
 
-/* Das Mikroskop */ 
+/* =========================================================
+   Mikroskop & Labor-Elemente
+========================================================= */
+
+/* Allgemeine Screen-Box */
 .screen-box {
     background-color: #FFF0F7;
     border-radius: 28px;
     padding: 20px;
-    box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
+
     margin-bottom: 18px;
+
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
 }
+
+/* Agarplatten */
 .plate-card {
     background: #FFE4F1;
-    border-radius: 999px;
+
     width: 180px;
     height: 180px;
+
     margin: 0 auto 12px auto;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 0 0 8px rgba(255,255,255,0.4),
-                0px 8px 18px rgba(0,0,0,0.08);
+
+    border-radius: 999px;
+
     font-size: 56px;
+
+    box-shadow:
+        inset 0 0 0 8px rgba(255,255,255,0.4),
+        0px 8px 18px rgba(0,0,0,0.08);
 }
+
 .plate-label {
     text-align: center;
-    font-weight: 800;
+
     font-size: 18px;
+    font-weight: 800;
+
     margin-bottom: 8px;
+
     color: #4B0082 !important;
 }
+
+/* Mikroskopie */
 .microscope-box {
     background: #E6F7FF;
+
     border-radius: 28px;
     padding: 24px;
+
     text-align: center;
-    box-shadow: 0px 8px 18px rgba(0,0,0,0.08);
+
     margin-bottom: 16px;
+
+    box-shadow: 0px 8px 18px rgba(0,0,0,0.08);
 }
+
+/* Gram-Färbung */
 .gram-step-card {
     background: #F3E8FF;
+
     border-radius: 20px;
     padding: 16px;
-    text-align: center;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.06);
-    margin-bottom: 10px;
+
     min-height: 120px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.06);
 }
+
 .gram-step-title {
     font-weight: 800;
+
     margin-bottom: 8px;
+
     color: #4B0082 !important;
 }
+
+/* Grosse Emojis */
 .big-emoji {
     font-size: 44px;
-    margin-bottom: 10px;
+
     display: block;
+
+    margin-bottom: 10px;
 }
+
+/* Diagnose-/Hinweiskarten */
 .path-card {
     background: #FFF7D6;
+
     border-radius: 18px;
     padding: 12px 14px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+
     margin-top: 10px;
     margin-bottom: 14px;
+
     color: #4B0082 !important;
+
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
 }
-            
-/* Dropdown komplett einfärben */
+
+/* =========================================================
+   Dropdown / Expander
+========================================================= */
+
+/* Gesamter Dropdown */
 div[data-testid="stExpander"] {
     background-color: #EFDCE6 !important;
+
     border-radius: 20px !important;
     border: 2px solid #E7A7C4 !important;
+
     overflow: hidden !important;
 }
 
 /* Dropdown-Kopf */
 div[data-testid="stExpander"] summary {
     background-color: #EFDCE6 !important;
+
     border-radius: 20px !important;
 }
 
 /* Dropdown-Inhalt */
 div[data-testid="stExpander"] div[role="region"] {
     background-color: #EFDCE6 !important;
+
     padding: 15px !important;
 }
             
-/* Laborjournal */ /* Design für die Einträge im Laborjournal*/
+/* =========================================================
+   Laborjournal
+========================================================= */
+
 .journal-card {
     background: #FFF8DC;
+
     border-radius: 22px;
-    padding: 18px;
-    box-shadow: 0px 6px 15px rgba(0,0,0,0.08);
     border: 2px dashed #E6CFA7;
+
+    padding: 18px;
     margin-bottom: 14px;
+
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.08);
 }
+
 .journal-title {
-    font-weight: 900;
     font-size: 20px;
+    font-weight: 900;
+
     margin-bottom: 12px;
+
     color: #4B0082 !important;
 }
+
 .journal-section {
     font-weight: 800;
+
     margin-top: 10px;
     margin-bottom: 6px;
+
     color: #4B0082 !important;
 }
+
 .journal-entry {
+    font-size: 14px;
+
     margin-left: 10px;
     margin-bottom: 4px;
-    font-size: 14px;
-    color: #5A2D82 !important;
-}            
-</style>
-""", unsafe_allow_html=True)
 
-# Zusätzliche Styles für die speziellen Karten und Elemente, die in den verschiedenen Screens der App verwendet werden. Diese Styles sorgen dafür, dass die Informationen auf den Karten klar strukturiert und ansprechend präsentiert werden, damit die Spieler sie leicht verstehen und interpretieren können. Jede Karte hat ein eigenes Farbschema und Layout, das sich von den anderen unterscheidet, um die verschiedenen Arten von Informationen visuell zu unterscheiden.
-st.markdown("""
-<style>
+    color: #5A2D82 !important;
+}
+
+/* =========================================================
+   Blutanalyse
+========================================================= */
+
 .analyzer-card {
     background: #eef5fb;
+
     border-radius: 24px;
+    border: 2px solid #d6e8f7;
+
     padding: 20px;
     min-height: 180px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    border: 2px solid #d6e8f7;
+
     margin-bottom: 12px;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .analyzer-title {
     font-size: 24px;
     font-weight: 800;
-    color: #4b0082;
+
     margin-bottom: 8px;
+
+    color: #4b0082;
 }
 
 .analyzer-sub {
     font-size: 16px;
-    color: #5e2a84;
     line-height: 1.5;
+
     margin-bottom: 14px;
+
+    color: #5e2a84;
 }
 
 .analyzer-status {
     display: inline-block;
+
     background: #f8e7f0;
     color: #4b0082;
-    padding: 8px 14px;
+
     border-radius: 999px;
+    padding: 8px 14px;
+
     font-size: 14px;
     font-weight: 700;
+
     margin-top: 8px;
 }
 
 .machine-box {
     background: #fff8fc;
+
     border: 2px dashed #e5bfd1;
     border-radius: 22px;
+
     padding: 18px;
     margin: 12px 0 18px 0;
+
     color: #5e2a84;
     font-size: 17px;
     line-height: 1.6;
@@ -358,9 +488,12 @@ st.markdown("""
 
 .analysis-step {
     background: #f3d6e5;
+
     border-radius: 18px;
     padding: 14px 18px;
+
     margin: 10px 0;
+
     color: #4b0082;
     font-weight: 600;
 }
@@ -369,20 +502,23 @@ st.markdown("""
     height: 14px;
 }
             
-
-/* --- Floating Lab Elements --- */
+/* =========================================================
+   Floating Lab Elements
+========================================================= */
 
 .floating-item {
     position: fixed;
-    font-size: 52px;
-    opacity: 0.22;
+
     z-index: 0;
     pointer-events: none;
+
+    font-size: 52px;
+    opacity: 0.22;
 
     animation: floaty 8s ease-in-out infinite;
 }
 
-/* Einzelne Positionen */
+/* Positionen */
 
 .item1 {
     top: 8%;
@@ -420,7 +556,7 @@ st.markdown("""
     animation-delay: 5s;
 }
 
-/* Bewegung */
+/* Floating Animation */
 
 @keyframes floaty {
 
@@ -437,12 +573,10 @@ st.markdown("""
     }
 }
 
-
-            
 </style>
 """, unsafe_allow_html=True)
 
-# Floatin Bacteria anzeigen
+# Floating Lab-Elemente anzeigen
 st.markdown("""
 <div class="floating-item item1">🦠</div>
 <div class="floating-item item2">🧬</div>
@@ -453,56 +587,78 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =========================================================
-# 2) SESSION STATE # Hier werden alle Variablen definiert, die den Zustand der App speichern, z.B. welcher Fall ausgewählt ist, welche Stationen freigeschaltet sind, welche Ergebnisse die Spieler bereits gesehen haben, etc. Diese Variablen werden verwendet, um den Fortschritt der Spieler zu verfolgen und die App entsprechend anzupassen.
+# 2) SESSION STATE
 # =========================================================
+
+# Aktueller Screen
 if "screen" not in st.session_state:
     st.session_state.screen = "home"
 
+# Punktestand
 if "score" not in st.session_state:
     st.session_state.score = 0
 
+# Feedback nach Diagnose
 if "feedback" not in st.session_state:
     st.session_state.feedback = None
 
+# Freigeschaltete Laborstationen
 default_unlocked = {
     "Mikroskop": False,
     "Kultur & Tests": False,
     "Blutanalyse": False,
 }
 
-if "unlocked" not in st.session_state or set(st.session_state.unlocked.keys()) != set(default_unlocked.keys()):
+# Freigeschaltete Stationen
+if (
+    "unlocked" not in st.session_state
+    or set(st.session_state.unlocked.keys()) != set(default_unlocked.keys())
+):
     st.session_state.unlocked = default_unlocked.copy()
 
+# Aktueller Fall
 if "case" not in st.session_state:
     st.session_state.case = "Fall 1"
 
+# Ausgewählte Agarplatte
 if "selected_plate" not in st.session_state:
     st.session_state.selected_plate = None
 
+# Gram-Färbung
 if "gram_steps" not in st.session_state:
     st.session_state.gram_steps = []
 
 if "gram_result" not in st.session_state:
     st.session_state.gram_result = None
 
+# Blutanalyse
 if "selected_blood_param" not in st.session_state:
     st.session_state.selected_blood_param = None
-if "lab_journal" not in st.session_state:
+
+# Laborjournal
+default_lab_journal = {
+    "Mikroskop": [],
+    "Kultur & Tests": [],
+    "Blutanalyse": []
+}
+
+if (
+    "lab_journal" not in st.session_state
+    or set(st.session_state.lab_journal.keys()) != set(default_lab_journal.keys())
+):
     st.session_state.lab_journal = {
-        "Mikroskop": [],
-        "Kultur & Tests": [],
-        "Blutanalyse": []
+        key: value.copy() for key, value in default_lab_journal.items()
     }
 
+# Hilfe-Menü
 if "show_help" not in st.session_state:
     st.session_state.show_help = False
 
+# Gram-Färbung
 if "gram_done" not in st.session_state:
     st.session_state.gram_done = False
 
-if "selected_plate" not in st.session_state:
-    st.session_state.selected_plate = None
-
+# Blutanalyse
 if "blood_started" not in st.session_state:
     st.session_state.blood_started = False
 
@@ -512,29 +668,26 @@ if "blood_done" not in st.session_state:
 if "blood_loaded" not in st.session_state:
     st.session_state.blood_loaded = False
 
+# Analyse-Status
 if "chem_done" not in st.session_state:
     st.session_state.chem_done = False
 
 if "hema_done" not in st.session_state:
     st.session_state.hema_done = False
 
+# Bereits bewertete Fälle
 if "scored_cases" not in st.session_state:
     st.session_state.scored_cases = {}
 
-if "feedback" not in st.session_state:
-    st.session_state.feedback = None
-
-if "score" not in st.session_state:
-    st.session_state.score = 0
-
 # =========================================================
-# 3) FALLDATEN Hier sind alle Falldaten aufgeführt (Patientenakten)
+# 3) FALLDATEN
 # =========================================================
+# Patientenakten und klinische Informationen der Fälle
 cases = {
     "Fall 1": {
         "story": "Eine 26-jährige Patientin wird notfallmässig ins Spital eingeliefert. "
                  "Sie wirkt verwirrt und desorientiert. Die Pflege berichtet von hohem Fieber und starkem Schüttelfrost. "
-                 "Bei der Untersuchung zeigt sich eine schmerzhafte Schwellung am Oberschenkel, aus der Eiter austritt. "
+                 "Bei der Untersuchung zeigt sich eine schmerzhafte Schwellung am Oberschenkel, aus dem eitriges Sekret austritt. "
                  "Eine Probe wird ins Labor geschickt.",
         "name": "Britney McAdams",
         "age": 26,
@@ -547,7 +700,7 @@ cases = {
                  "Sie berichtet über Schluckbeschwerden seit mehreren Tagen. "
                  "Bei der Untersuchung zeigen sich gerötete Tonsillen und geschwollene Lymphknoten.",
         "name": "Rebekka Schmidt",
-        "age": 55,
+        "age": 17,
         "sex": "weiblich",
         "symptoms": "Halsschmerzen, Fieber"
     },
@@ -558,7 +711,7 @@ cases = {
         "name": "Sara Keller",
         "age": 24,
         "sex": "weiblich",
-        "symptoms": "Dysurie, Bauchschmerzen"
+        "symptoms": "Dysurie, Bauchschmerzen, Häufiger Harndrang"
     },
 
     "Fall 4": {
@@ -567,7 +720,7 @@ cases = {
         "name": "Tim Weber",
         "age": 33,
         "sex": "männlich",
-        "symptoms": "Bauchschmerzen, Durchfall"
+        "symptoms": "Bauchschmerzen, Durchfall, Gewichtsverlust"
     },
 
     "Fall 5": {
@@ -576,7 +729,7 @@ cases = {
         "name": "Samuel D McDonald",
         "age": 72,
         "sex": "männlich",
-        "symptoms": "Rötung an Katheterstelle"
+        "symptoms": "Rötung an Katheterstelle, leichtes Fieber, Unwohlsein"
     },
 
     "Fall 6": {
@@ -589,7 +742,7 @@ cases = {
     }
 }
 
-# Alten gespeicherten Fallnamen bereinigen
+# Alte Fallnamen bereinigen
 if "case" in st.session_state and isinstance(st.session_state.case, str):
     if " - " in st.session_state.case:
         st.session_state.case = st.session_state.case.split(" - ")[0]
@@ -616,7 +769,7 @@ lab_info = {
                "Agarplatte": "Wachstum möglich, aber weniger aggressiv.",
                "Blutprobe": "Eosinophilie wäre ein zentraler Hinweis."},
     "Fall 5": {"Mikroskop": "Kokken sind sichtbar.",
-               "Agarplatte": "Standardplatten wenig hilfreich.",
+               "Agarplatte": "Wachstum grampositiver Hautflora möglich.",
                "Blutprobe": "Erhöhte Entzündungszeichen."},
     "Fall 6": {"Mikroskop": "Sprosszellen oder Hyphen möglich.",
                "Agarplatte": "Pilzwachstum könnte sichtbar sein.",
@@ -628,20 +781,20 @@ micro_tests = {
     "Fall 2": {"Katalase": "negativ", "Koagulase": "nicht sinnvoll"},
     "Fall 3": {"Katalase": "nicht zentral", "Koagulase": "nicht sinnvoll"},
     "Fall 4": {"Katalase": "nicht sinnvoll", "Koagulase": "nicht sinnvoll"},
-    "Fall 5": {"Katalase": "negativ", "Koagulase": "negativ"},
+    "Fall 5": {"Katalase": "positiv", "Koagulase": "negativ"},
     "Fall 6": {"Katalase": "nicht primär", "Koagulase": "nicht primär"},
 }
 # beschreibt die Mikroskopischen Eindrücke pro Fall, die angezeigt werden, wenn die Spieler die Mikroskop-Station öffnen. Es enthält auch den Pfad zu einem Bild, das den mikroskopischen Eindruck visualisiert. Diese Bilder sollten in einem Ordner "images" im selben Verzeichnis wie die App liegen.
 #Aufzeigen der Mikroskopischen Bildern
 microscope_info = {
     "Fall 1": {
-        "view": "Grampositive Kokken in Haufen, spricht eher für Staphylokokken",
+        "view": "Grampositive Kokken in Haufen, typisch für Staphylokokken",
         "gram_type": "Gram-positiv",
         "image": "images/fall1_mikro.png",
         "sample": "Probe: Eiter aus einer Hautabszess-Läsion"
     },
     "Fall 2": {
-        "view": "Grampositive Kokken in Ketten, spricht eher für Streptokokken",
+        "view": "Grampositive Kokken in Ketten, typisch für Streptokokken",
         "gram_type": "Gram-positiv",
         "image": "images/fall2_mikro.png",
         "sample": "Probe: Rachenabstrich"
@@ -662,7 +815,7 @@ microscope_info = {
         "view": "Grampositive Kokken erkennbar",
         "gram_type": "Gram-positiv, aber unspezifisch",
         "image": "images/fall5_mikro.png",
-        "sample": "Probe: Liquor"
+        "sample": "Probe: Abstrich von der Katheterstelle"
     },
     "Fall 6": {
         "view": "Sprosszellen und Hyphen, vereinbar mit einem Hefepilz",
@@ -699,7 +852,7 @@ REF_BLOOD_DIFF = {
     "Lymphozyten (%)": (20, 45),
     "Eosinophile (%)": (0, 6)
 }
-# Werte für die Blurprobenscreening
+# Werte für das Blutprobenscreening
 blood_values = {
     "Fall 1": {"CRP (mg/L)": 180, "PCT (ng/mL)": 8.5, "Leukos (G/L)": 18, "Laktat (mmol/L)": 4.2, "pH (BGA)": 7.28},
     "Fall 2": {"CRP (mg/L)": 95, "Leukos (G/L)": 14},
@@ -708,15 +861,16 @@ blood_values = {
     "Fall 5": {"CRP (mg/L)": 4, "Leukos (G/L)": 9},
     "Fall 6": {"CRP (mg/L)": 20, "Leukos (G/L)": 10},
 }
-# Werte für das Weisse blutbild
+# Werte für das Differentialblutbild
 blood_diff = {
-    "Fall 1": {"Leukozyten (G/L)": 14, "Neutrophile (%)": 82, "Lymphozyten (%)": 12, "Eosinophile (%)": 1},
+    "Fall 1": {"Leukozyten (G/L)": 18, "Neutrophile (%)": 82, "Lymphozyten (%)": 12, "Eosinophile (%)": 1},
     "Fall 2": {"Leukozyten (G/L)": 13, "Neutrophile (%)": 78, "Lymphozyten (%)": 15, "Eosinophile (%)": 1},
     "Fall 3": {"Leukozyten (G/L)": 12, "Neutrophile (%)": 74, "Lymphozyten (%)": 18, "Eosinophile (%)": 1},
-    "Fall 4": {"Leukozyten (G/L)": 8, "Neutrophile (%)": 60, "Lymphozyten (%)": 30, "Eosinophile (%)": 2},
-    "Fall 5": {"Leukozyten (G/L)": 9, "Neutrophile (%)": 45, "Lymphozyten (%)": 25, "Eosinophile (%)": 18},
+    "Fall 4": {"Leukozyten (G/L)": 8, "Neutrophile (%)": 45, "Lymphozyten (%)": 25, "Eosinophile (%)": 18},
+    "Fall 5": {"Leukozyten (G/L)": 9, "Neutrophile (%)": 55, "Lymphozyten (%)": 30, "Eosinophile (%)": 2},
     "Fall 6": {"Leukozyten (G/L)": 10, "Neutrophile (%)": 55, "Lymphozyten (%)": 30, "Eosinophile (%)": 6},
 }
+
 # Erklärungstexte für Blutbild-Werte als Hilfestellung
 blood_explanations = {
     "Leukozyten (G/L)": "Leukozyten sind weisse Blutkörperchen. Erhöhte Werte sprechen oft für eine Entzündung oder Infektion.",
@@ -745,7 +899,7 @@ agar_results = {
     "Fall 4": {
         "COS": "Kein Wachstum.",
         "MAC": "Kein Wachstum.",
-        "CNA": "Wachstum vorhanden."
+        "CNA": "Kein Wachstum."
     },
     "Fall 5": {
         "COS": "leichtes Wachstum.",
@@ -777,32 +931,43 @@ solutions = {
     "Fall 5": "Staphylococcus epidermidis",
     "Fall 6": "Candida spp.",
 }
-# Hier sind die Diagnoseoptionen, die in der Auswahlbox angezeigt werden. Sie sollten alle möglichen Diagnosen enthalten, damit die Spieler eine Auswahl treffen können. Einige Fälle sind als Verwirrung hier
+# Mögliche Diagnosen
 DIAG_CHOICES = [
+    # Grampositive Bakterien
     "Staphylococcus aureus",
     "Staphylococcus epidermidis",
     "Streptococcus pyogenes",
+
+    # Gramnegative Bakterien
     "Escherichia coli",
     "Klebsiella pneumoniae",
     "Pseudomonas aeruginosa",
+
+    # Pilze / Parasiten
     "Candida spp.",
-    "Virale Infektion (z.B. Influenza)",
-    "EBV / Mononukleose",
-    "Allergische Reaktion / Hypersensitivität",
     "Helmintheninfektion",
     "Giardiasis (Protozoen)",
-    "Akutes Koronarsyndrom",
-    "Pneumonie (bakteriell)",
-    "Pneumonie (viral)",
-    "Diabetische Ketoazidose",
+
+    # Virale Ursachen
+    "Virale Infektion (z.B. Influenza)",
+    "EBV / Mononukleose",
+
+    # Andere Differenzialdiagnosen
+    "Allergische Reaktion / Hypersensitivität",
     "Gastroenteritis (bakteriell)",
     "Gastroenteritis (viral)",
+    "Pneumonie (bakteriell)",
+    "Pneumonie (viral)",
+    "Akutes Koronarsyndrom",
+    "Diabetische Ketoazidose",
+
+    # Unsicher
     "Unklar",
 ]
 
-# =========================================================
-# 4) HELPER FUNCTIONS, z.Bsp. für die Interpretation von Blutwerten oder Mikrotests
-# =========================================================
+# ========================================================
+# 4) HELPER FUNCTIONS
+# ========================================================
 def flag(value, low, high):
     if value < low:
         return "↓"
@@ -821,7 +986,7 @@ def interpret_blood(diff: dict) -> list[str]:
     if lymph >= 45:
         hints.append("Lymphozyten ↑ spricht eher für virale Ursache")
     if eos >= 6:
-        hints.append("Eosinophile ↑ spricht für Parasiten oder Allergie/ Überempfindlichkeit")
+        hints.append("Eosinophile ↑ spricht für Parasiten oder Allergie / Überempfindlichkeit")
     if not hints:
         hints.append("Differentialblutbild: kein klarer Hinweis → weitere Tests wichtig")
     return hints
@@ -839,7 +1004,7 @@ def interpret_micro(mt: dict) -> list[str]:
         elif "negativ" in koa:
             hints.append("Koagulase negativ = eher Staphylococcus epidermidis")
 
-    if "ketten" in gram and "negativ" in kat:
+    if "gram-positiv" in gram and "ketten" in gram and "negativ" in kat:
         hints.append("Grampositive Kokken in Ketten + Katalase negativ = Hinweis auf Streptokokken")
 
     if not hints:
@@ -851,20 +1016,19 @@ def reset_gram_game():
     st.session_state.gram_result = None
 
 # =========================================================
-# 5) SCREENS  Hier wird definiert, was auf den verschiedenen Screens angezeigt wird (Home, Level-Auswahl, Labor, etc.)
+# 5) SCREENS
 # =========================================================
 
 # -------------------------
-# HOME SCREEN  Hier sollte die Begrüßung, eine kurze Einführung in das Spiel und ein Start-Button angezeigt werden. Es könnte auch ein Hinweis auf den aktuellen Score oder Fortschritt der Spieler geben, damit sie motiviert bleiben, weiterzuspielen.
+# HOME SCREEN
 # -------------------------
 if st.session_state.screen == "home":
 
-    # Hintergrundbild laden
+    # Startscreen-Hintergrund laden
     bg_image = get_base64("images/startscreen.png")
 
     st.markdown(f"""
     <style>
-
     .stApp {{
         background-image: url("data:image/png;base64,{bg_image}");
         background-size: cover;
@@ -872,94 +1036,71 @@ if st.session_state.screen == "home":
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}
-
     </style>
     """, unsafe_allow_html=True)
-
 
     # Abstand nach oben
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-#Titel
-# Titel mit eigenem weißen Balken
-    st.markdown("""
-    <div style='text-align: center;'>
-
-    <!-- Nur die Überschrift bekommt den Balken -->
-    <h1 style='
-        display: inline-block;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px 30px;
-        border-radius: 15px;
-        font-size: 65px;
-        color: #4B0082;
-        font-weight: 900;
-        margin-bottom: 20px;
-    '>
-        Lab Diagnose Game
+    # Titelbereich
+    st.markdown(
+    """
+    <div style="text-align: center;">
+    <h1 style="display: inline-block; background-color: rgba(255,255,255,0.8); padding: 10px 30px; border-radius: 15px; font-size: 65px; color: #4B0082; font-weight: 900; margin-bottom: 20px;">
+    Lab Diagnose Game
     </h1>
-
-    <!-- Der Untertext steht darunter auf dem pinken Hintergrund -->
-    <p style='
-        font-size: 28px;
-        color: #5A2D82;
-        font-weight: 500;
-    '>
-        Willkommen im biomedizinischen Labor!
+    <p style="font-size: 28px; color: #5A2D82; font-weight: 500;">
+    Willkommen im biomedizinischen Labor!
     </p>
-
     </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Score mittig
+    # Score-Anzeige
     st.markdown(f"""
-    <div style='
-        text-align:center;
-        font-size:28px;
-        font-weight:700;
-        color:#4B0082;
-        margin-top:20px;
-    '>
-
-    Score: {st.session_state.score}
-
+    <div style="
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #4B0082;
+        margin-top: 20px;
+    ">
+        Score: {st.session_state.score}
     </div>
     """, unsafe_allow_html=True)
-
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-
-    # Button mittig
-    col1, col2, col3 = st.columns([1,1,1])
+    # Start-Button
+    col1, col2, col3 = st.columns([1, 1, 1])
 
     with col2:
-
         if st.button("✨ Start", key="start_home", use_container_width=True):
             st.session_state.screen = "level"
             st.session_state.selected_plate = None
             st.rerun()
 
 # -------------------------
-# LEVEL SCREEN, Hier sollte die Aufführung aller Fälle sein, damit die Spieler einen Fall auswählen können. Es sollte auch der aktuelle Score angezeigt werden.
+# LEVEL SCREEN
 # -------------------------
 elif st.session_state.screen == "level":
     st.title("Fall auswählen")
 
     st.markdown(f"""
     <div class="hint-card">
-    🎯 <b>Score:</b> {st.session_state.score}
+        🎯 <b>Score:</b> {st.session_state.score}
     </div>
     """, unsafe_allow_html=True)
 
     case_preview = {
-    "Fall 1": "Schwerer Infekt mit Fieber",
-    "Fall 2": "Akute Halsentzündung",
-    "Fall 3": "Verdacht auf Harnwegsinfekt",
-    "Fall 4": "Gastrointestinale Beschwerden",
-    "Fall 5": "Infektion an Katheterstelle",
-    "Fall 6": "Verdacht auf Infektion",
-}
+        "Fall 1": "Schwerer Infekt mit Fieber",
+        "Fall 2": "Akute Halsentzündung",
+        "Fall 3": "Verdacht auf Harnwegsinfekt",
+        "Fall 4": "Gastrointestinale Beschwerden",
+        "Fall 5": "Infektion an Katheterstelle",
+        "Fall 6": "Verdacht auf Infektion",
+    }
 
     order = ["Fall 1", "Fall 2", "Fall 3", "Fall 4", "Fall 5", "Fall 6"]
 
@@ -968,58 +1109,72 @@ elif st.session_state.screen == "level":
     for i, case_key in enumerate(order):
         with cols[i % 3]:
             label = f"{case_key} - {case_preview[case_key]}"
+
             if st.button(label, key=f"btn_{case_key}"):
+
                 st.session_state.case = case_key
+
                 st.session_state.lab_journal = {
                     "Mikroskop": [],
                     "Blutanalyse": [],
                     "Kultur & Tests": []
-}
+                }
+
                 st.session_state.unlocked = {
                     "Mikroskop": False,
                     "Blutanalyse": False,
                     "Kultur & Tests": False
-}
+                }
+
                 st.session_state.screen = "lab"
                 st.session_state.feedback = None
                 st.session_state.selected_plate = None
+
                 reset_gram_game()
                 st.rerun()
+
     if st.button("🔙 Zurück zum Home", key="back_level"):
         st.session_state.screen = "home"
         st.rerun()
 # -------------------------
-# LAB SCREEN zur Fallbearbeitung, hier sollten die Patientendaten, die Auswahl der Laborstationen und die Diagnoseoptionen angezeigt werden. Je nachdem, welche Laborstationen freigeschaltet wurden, sollten die entsprechenden Ergebnisse/Hinweise angezeigt werden. Es sollte auch die Möglichkeit geben, zur Level-Auswahl zurückzukehren.
+# LAB SCREEN
 # -------------------------
 elif st.session_state.screen == "lab":
     case = st.session_state.case
     data = cases[case]
 
-    # --- 1. HEADER (Oben fixiert) ---
-    st.markdown('<div class="header-content">', unsafe_allow_html=True)
+    # --- 1. HEADER ---
     if st.button("← Fallauswahl", key="back_to_lvl"):
         st.session_state.screen = "level"
         st.rerun()
-    st.markdown(f'<div class="header-pill">🧪 {case}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="header-score">🎯 Score: {st.session_state.score}</div>', unsafe_allow_html=True)
-    st.markdown('</div></div></div>', unsafe_allow_html=True)
 
-    # Die Patientenakte mit den wichtigsten Informationen fürs Spiel
     st.markdown(f"""
-        <div class="cute-card">
-            <h4>🩺 Patientenfall</h4>
-            <p style="font-style: italic;">"{data['story']}"</p>
-            <hr>
-            <b>Patient:</b> {data['name']} ({data['age']} Jahre, {data['sex']})<br>
-            <b>Symptome:</b> {data['symptoms']}
-        </div>
-        """, unsafe_allow_html=True)
+    <div class="header-row">
+        <div class="header-pill">🧪 {case}</div>
+        <div class="header-score">🎯 Score: {st.session_state.score}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("") # Kleiner Abstand
-    st.divider()
+    # --- 2. PATIENTENAKTE ---
+    st.markdown(f"""
+    <div class="cute-card">
+    <h2>🩺 Patientenfall</h2>
+    <p style="font-style: italic; font-size: 20px; line-height: 1.6;">
+    "{data['story']}"
+    </p>
+    <hr>
+    <p style="font-size: 17px;">
+    <b>Patient:</b> {data['name']} ({data['age']} Jahre, {data['sex']})
+    </p>
+    <p style="font-size: 17px;">
+    <b>Symptome:</b> {data['symptoms']}
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # --- 3. REIHE: LABORSTATIONEN (Breit verteilt) ---
+    # --- 3. LABORSTATIONEN ---
     st.write("### 🔬 Laborstationen")
+
     col1, col2, col3 = st.columns(3, gap="medium")
 
     with col1:
@@ -1083,7 +1238,7 @@ elif st.session_state.screen == "lab":
                         st.session_state[feedback_key] = {"type": "error", "msg": f"❌ Falsch! Lösung: {solutions[case]}"}
                     st.session_state.scored_cases[case] = True
                     st.rerun()
-        # FEEDBACK ANZEIGEN
+        # Feedback Anzeigen
         feedback_key = f"feedback_{case}"
 
         if feedback_key in st.session_state:
@@ -1098,14 +1253,15 @@ elif st.session_state.screen == "lab":
 # -------------------------
 # AGAR SCREEN
 # -------------------------
-# --- AGAR SCREEN UPDATE ---
 elif st.session_state.screen == "agar":
     case = st.session_state.case
-    
+
+    # Zurück-Button zum Labor
     if st.button("← Zurück zum Labor", key=f"back_from_agar_{case}"):
         st.session_state.screen = "lab"
         st.rerun()
-  
+
+  # Einführungstext
     st.markdown("""
     <div class="screen-box">
         <h1 style="text-align:center;">🧫 Kultur & Tests</h1>
@@ -1113,28 +1269,30 @@ elif st.session_state.screen == "agar":
     </div>
     """, unsafe_allow_html=True)
 
-    # GLÜHBIRNE / HILFE SEKTION
+    # Glühbirne, mit Nebeninfos
     with st.expander("💡 Wissen: Was verraten uns diese Agarplatten?", expanded=False):
         st.markdown("""
         ### 🧫 Die Welt der Nährmedien
         Um Bakterien zu identifizieren, lassen wir sie auf verschiedenen "Tellern" (Agarplatten) wachsen:
         
-        *   **COS (Caspari-Agar / Schafblut):** Ein Universalmedium. Fast alles wächst hier. Besonders wichtig: Hier sieht man die **Hämolyse** (wie die Bakterien rote Blutkörperchen zerstören).
+        *   **COS (Kochblutagar mit Schafsblut):** Ein Universalmedium. Fast alles wächst hier. Besonders wichtig: Hier sieht man die **Hämolyse** (wie die Bakterien rote Blutkörperchen zerstören).
         *   **MAC (MacConkey-Agar):** Ein Selektivmedium für **gramnegative Bakterien** (z.B. Darmbakterien). Es zeigt auch, ob die Bakterien Zucker (Laktose) vergären können (gibt verschiedene Verfärbungen auf Agar!).
         *   **CNA (Colistin-Nalidixinsäure-Agar):** Ein Selektivmedium, auf dem fast nur **grampositive Bakterien** (wie Staphylokokken oder Streptokokken) wachsen.
         
         **Warum nutzen wir mehrere?** Wenn etwas auf CNA wächst, aber nicht auf MAC, wissen wir sofort: Es ist grampositiv!
         """)
 
-
+    # Plattenübersicht mit Erklärungen
     st.markdown("""
     <div class="path-card">
     🧪 <b>Plattenübersicht:</b> COS = Kochblut, MAC = MacConkey, CNA = grampositive Selektion
     </div>
     """, unsafe_allow_html=True)
 
+    # Agarplatten-Auswahl
     st.subheader("Agarplatte auswählen")
 
+    # Drei Spalten für die Plattenauswahl mit Symbolen und Beschriftungen
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -1233,6 +1391,7 @@ elif st.session_state.screen == "agar":
             "CNA": "Kaum oder kein Wachstum"
         }
     }
+    
     plate = st.session_state.get("selected_plate")
 
     if plate is not None:
@@ -1243,7 +1402,7 @@ elif st.session_state.screen == "agar":
         st.markdown("## 🧫 Wachstum auf der ausgewählten Platte")
 
         st.markdown(f"""
-        <div class="result-box">
+        <div class="result-card">
             <h3>🔎 Ausgewählte Platte: {plate}</h3>
         </div>
         """, unsafe_allow_html=True)
@@ -1252,63 +1411,54 @@ elif st.session_state.screen == "agar":
         st.info(text)
 
         st.subheader("Mikrobiologische Schnelltests")
+
         st.markdown(f"""
         <div class="result-card">
-        <b>Katalase:</b> {mt["Katalase"]}<br>
-        <b>Koagulase:</b> {mt["Koagulase"]}<br>
+            <b>Katalase:</b> {mt.get("Katalase", "nicht durchgeführt/keine Angabe")}<br>
+            <b>Koagulase:</b> {mt.get("Koagulase", "nicht durchgeführt/keine Angabe")}<br>
         </div>
         """, unsafe_allow_html=True)
 
         st.write("---")
+
         st.subheader("🧠 Interpretation der Agarplatten")
-        for h in interpret_micro(mt):
-            st.markdown(f"""<div class="hint-card">{h}</div>""", unsafe_allow_html=True)
+        for hint in interpret_micro(mt):
+            st.markdown(f'<div class="hint-card">{hint}</div>', unsafe_allow_html=True)
 
         st.write("---")
 
-# --- NEUER CODE FÜR AGAR-JOURNAL ---
-    if st.button("📓 Befunde ins Laborjournal übernehmen", key=f"journal_agar_{case}"):
+        # Laborjournal der Agarplattenbefunde
+        if st.button("📓 Befunde ins Laborjournal übernehmen", key=f"journal_agar_{case}"):
 
-        # Falls die Kategorie noch nicht existiert, wird sie erstellt
-        if "Kultur & Tests" not in st.session_state.lab_journal:
-            st.session_state.lab_journal["Kultur & Tests"] = []
+            if "Kultur & Tests" not in st.session_state.lab_journal:
+                st.session_state.lab_journal["Kultur & Tests"] = []
 
-        # Wir sammeln die Infos ALLER Platten
-        neue_infos = []
+            neue_infos = []
 
-        for aktuelle_platte in ["COS", "MAC", "CNA"]:
-
-            platten_text = agar_results[case][aktuelle_platte]
+            for aktuelle_platte in ["COS", "MAC", "CNA"]:
+                platten_text = plate_text[case][aktuelle_platte]
+                neue_infos.append(f"Platte {aktuelle_platte}: {platten_text}")
 
             neue_infos.append(
-                f"Platte {aktuelle_platte}: {platten_text}"
-        )
+                f"Schnelltests: Kat({mt.get('Katalase', 'nicht durchgeführt/keine Angabe')}), "
+                f"Koag({mt.get('Koagulase', 'nicht durchgeführt/keine Angabe')})"
+            )
 
-    # Schnelltests nur einmal ergänzen, da sie sich nicht mit der Plattenwahl ändern
-        neue_infos.append(
-            f"Schnelltests: Kat({mt.get('Katalase', 'nicht durchgeführt/keine Angabe')}), "
-            f"Koag({mt.get('Koagulase', 'nicht durchgeführt/keine Angabe')}), "
-            f"Hämolyse({mt.get('Hämolyse', 'nicht durchgeführt/keine Angabe')})"
-        )
+            for info in neue_infos:
+                if info not in st.session_state.lab_journal["Kultur & Tests"]:
+                    st.session_state.lab_journal["Kultur & Tests"].append(info)
 
-        # Wir hängen alles an die Liste an, falls es noch nicht drin ist
-        for info in neue_infos:
-            if info not in st.session_state.lab_journal["Kultur & Tests"]:
-                st.session_state.lab_journal["Kultur & Tests"].append(info)
+            st.success("✅ Alle Agar-Befunde wurden ins Journal eingetragen!")
 
-        st.success("✅ Alle Agar-Befunde wurden ins Journal eingetragen!")
-    # --- ENDE NEUER CODE ---
-        
     else:
         st.markdown("""
         <div class="hint-card">
-        Wähle zuerst eine Platte aus, damit Wachstum, Schnelltests und Interpretation angezeigt werden.
+            Wähle zuerst eine Platte aus, damit Wachstum, Schnelltests und Interpretation angezeigt werden.
         </div>
         """, unsafe_allow_html=True)
 # -------------------------
-# MIKROSKOP SCREEN hier können die Spieler den mikroskopischen Eindruck der Probe sehen und danach die Gram-Färbung durchführen, indem sie die Schritte in der richtigen Reihenfolge auswählen. Es gibt auch einen Zurück-Button, um zurück zum Labor zu gelangen.
+# MIKROSKOP SCREEN
 # -------------------------
-# --- MIKROSKOP SCREEN UPDATE ---
 elif st.session_state.screen == "mikroskop":
     case = st.session_state.case
 
@@ -1339,8 +1489,10 @@ elif st.session_state.screen == "mikroskop":
     st.subheader("🎮 Gram-Färbung Mini-Spiel")
     st.write("Wähle die Schritte in der richtigen Reihenfolge:")
 
+    # Vier Spalten für die Gram-Färbungsschritte
     c1, c2, c3, c4 = st.columns(4)
 
+    # Gram-Färbungsschritte mit Emojis und Beschriftungen
     with c3:
         st.markdown("""
         <div class="gram-step-card">
@@ -1385,6 +1537,7 @@ elif st.session_state.screen == "mikroskop":
             st.session_state.gram_steps.append("Safranin")
             st.rerun()
 
+    # Anzeige der aktuellen Reihenfolge und Reset-Button
     col_a, col_b = st.columns([3, 1])
 
     with col_a:
@@ -1400,6 +1553,7 @@ elif st.session_state.screen == "mikroskop":
             st.session_state.gram_done = False
             st.rerun()
 
+    # Sobald 4 Schritte gewählt wurden, wird die Reihenfolge überprüft und das Ergebnis angezeigt
     if len(st.session_state.gram_steps) == 4 and st.session_state.gram_result is None:
         correct_order = ["Kristallviolett", "Lugol", "Alkohol", "Safranin"]
 
@@ -1422,7 +1576,7 @@ elif st.session_state.screen == "mikroskop":
             caption="Mikroskopischer Befund",
             use_container_width=True
         )
-
+        # Interpretationstexte basierend auf dem Fall
         st.markdown(f"""
         <div class="hint-card">
         <b>🧪 {microscope_info[case]["sample"]}</b>
@@ -1438,11 +1592,16 @@ elif st.session_state.screen == "mikroskop":
     st.write("---")
 
     st.subheader("🧠 Interpretation des Mikroskops")
-
-    st.write(microscope_info[case]["view"])
+    
+    st.markdown(f"""
+    <div class="result-card">
+        {microscope_info[case]["view"]}
+    </div>
+    """, unsafe_allow_html=True)
 
     st.write("---")
 
+    # Laborjournal der Mikroskopbefunde
     if st.button("📓 Mikroskop-Befund ins Laborjournal übernehmen", key=f"journal_micro_{case}"):
         
         if "Mikroskop" not in st.session_state.lab_journal:
@@ -1458,10 +1617,10 @@ elif st.session_state.screen == "mikroskop":
             st.success("✅ Mikroskop-Befund wurde ins Journal übernommen!")
         else:
             st.warning("Bitte führe zuerst die Gram-Färbung korrekt durch.")
+
 # -------------------------
 # BLUTANALYSE SCREEN
 # -------------------------
-# --- BLUTANALYSE SCREEN UPDATE ---
 elif st.session_state.screen == "blutbild":
     case = st.session_state.case
 
@@ -1482,7 +1641,7 @@ elif st.session_state.screen == "blutbild":
     </div>
     """, unsafe_allow_html=True)
 
-    # GLÜHBIRNE / HILFE SEKTION
+    # Glühbrine, mit Nebeninfos
     with st.expander("💡 Wissen: Was bedeuten diese Blutwerte?", expanded=False):
         st.markdown("""
         ### 🩸 Entzündungsmarker im Check
@@ -1496,6 +1655,7 @@ elif st.session_state.screen == "blutbild":
 
     st.subheader("⚙️ Analyseablauf")
 
+# Simulation der Blutanalyse mit Fortschrittsbalken und Statusanzeigen
     if not st.session_state.blood_loaded:
         st.markdown("""
         <div class="machine-box">
@@ -1570,7 +1730,7 @@ elif st.session_state.screen == "blutbild":
         diff = blood_diff.get(case, {})
         
     st.markdown("---")
-
+    # Anzeige der Ergebnisse mit Ampelfarben und Interpretation
     if st.session_state.chem_done:
         st.subheader("🧪 Chemie-Resultate")
 
@@ -1596,7 +1756,7 @@ elif st.session_state.screen == "blutbild":
                 {param}: <b>{val}</b> (Ref: {low}–{high}) <b>{flag_symbol}</b>
                 </div>
                 """, unsafe_allow_html=True)
-
+    # Interpretation der Ergebnisse basierend auf den Werten und dem Fall
     if st.session_state.chem_done or st.session_state.hema_done:
         st.write("---")
         st.subheader("🧠 Interpretation der Blutanalyse")
@@ -1613,7 +1773,7 @@ elif st.session_state.screen == "blutbild":
             if "Leukos" in values and values["Leukos"] > 10:
                 st.markdown("""<div class="hint-card">🧠 Leukozyten erhöht → passt zu einer Entzündungsreaktion.</div>""", unsafe_allow_html=True)
         st.write("---")
-
+        # Zusammenfassung und Möglichkeit, die Befunde ins Laborjournal zu übernehmen
         if st.session_state.chem_done and st.session_state.hema_done:
             st.markdown("""
             <div class="analysis-step">
@@ -1622,7 +1782,7 @@ elif st.session_state.screen == "blutbild":
             """, unsafe_allow_html=True)
 
             st.markdown("---")
-
+            # Laborjournal der Blutanalysebefunde
             if st.button("📓 Ins Laborjournal übernehmen", key=f"journal_blood_{case}"):
                 neue_eintraege = []
 
