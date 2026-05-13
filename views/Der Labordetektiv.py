@@ -1231,34 +1231,43 @@ elif st.session_state.screen == "lab":
 
     with right_col:
         st.write("### 🧠 Finale Diagnose")
-        # Das helle Design für die Selectbox wird durch CSS automatisch angewendet
-        with st.form(key="final_diag"):
-            diag = st.selectbox("Was ist deine Diagnose?", ["— bitte wählen —"] + DIAG_CHOICES)
-            submit = st.form_submit_button("✅ Diagnose abgeben")
-            
-            # Die Logik für das Feedback (Punktevergabe) bleibt hier erhalten
-            if submit and diag != "— bitte wählen —":
+        
+        # 1. Die Auswahlbox (Key ist pro Fall einzigartig)
+        diag = st.selectbox(
+            "Was ist deine Diagnose?", 
+            ["— bitte wählen —"] + DIAG_CHOICES, 
+            key=f"select_diag_{case}"
+        )
+        
+        # 2. Der Button (Ohne Formular, damit es keine Key-Fehler gibt)
+        if st.button("✅ Diagnose abgeben", key=f"submit_btn_{case}", use_container_width=True):
+            if diag != "— bitte wählen —":
                 feedback_key = f"feedback_{case}"
+                
+                # Nur bewerten, wenn dieser Fall noch nicht gelöst wurde
                 if case not in st.session_state.scored_cases:
                     if diag == solutions[case]:
                         st.session_state.score += 10
                         st.session_state[feedback_key] = {"type": "success", "msg": "✅ Richtig! +10 Punkte"}
+                        # --- HIER FLIEGEN DIE BALLONS ---
+                        st.balloons() 
                     else:
                         st.session_state.score -= 5
                         st.session_state[feedback_key] = {"type": "error", "msg": f"❌ Falsch! Lösung: {solutions[case]}"}
+                    
+                    # Fall als erledigt markieren
                     st.session_state.scored_cases[case] = True
-                    st.rerun()
-        # Feedback Anzeigen
-        feedback_key = f"feedback_{case}"
+            else:
+                st.warning("Bitte wähle zuerst eine Diagnose aus!")
 
+        # 3. Feedback unter dem Button anzeigen
+        feedback_key = f"feedback_{case}"
         if feedback_key in st.session_state:
             fb = st.session_state[feedback_key]
-
             if fb["type"] == "success":
                 st.success(fb["msg"])
             elif fb["type"] == "error":
                 st.error(fb["msg"])
-
 
 # -------------------------
 # AGAR SCREEN
