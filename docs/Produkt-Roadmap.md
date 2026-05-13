@@ -83,7 +83,7 @@ Anzeige der berechneten Ergebnisse/ Laborresultate für den Benutzer mit kurzer 
 Feedbacksystem einbauen mit Korrekturhinweisen bei Nutzerentscheidungen
 
 ## V3.2
-Download der Laborresultate inklusive Referenzbereich ermöglichen (PDF)
+Idee für zukünftige Erweiterung: PDF-Export der Laborresultate
 
 
 # Version 4
@@ -103,7 +103,7 @@ Erweiterung um medizinische Hinweise, Hintergrundinformationen und Empfehlungen 
 Darstellung der Verlaufsdaten in Form einer Tabelle und eines Diagramms, Erfolgskurve, Auszeichnungen für richtige Diagnosen
 
 ## V4.2
-Persistente Speicherung der Daten über den DataManager (z.B CSV-Dateien)
+Geplante Erweiterung: Persistente Speicherung der Daten über den DataManager (z. B. CSV-Dateien)
 
 ## V4.3
 Finalisierung des visuellen Stils und letzte Korrekturen an der Benutzerführung für ein flüssiges Spielerlebnis
