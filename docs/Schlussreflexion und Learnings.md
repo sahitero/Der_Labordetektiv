@@ -16,6 +16,10 @@ Viele ideen für das Layout und kleine Details
 Gute Absprache untereinander
 Plan von Roadmap eingehalten
 
+## Learnings:
+wie man hunderte Codes übersichtlich darstellen kann
+
+
 
 
 
