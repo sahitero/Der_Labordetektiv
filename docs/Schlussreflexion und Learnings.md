@@ -1,5 +1,3 @@
-# Reflexion von Lia
-
 ## Herausforderungen:
 - Wer arbeitet wann im vscode und das kommunizieren, damit es keine Unstimmigkeiten gibt und es bei allen funktioniert (Koordination)
 - Klare Aufgabenverteilung innerhallb des Teams (Programmierung, Layoutgestaltung, Nutzertest, Dokumentation etc.)
@@ -9,7 +7,7 @@
 - Wieviel Hilfe bauen wir in die App ein, damit es noch als Unterstützung dient und nicht schon die Lösung gibt? -> Müssen wir unsere Persona anpassen?
 - Machen unsere Analyseresultate Sinn?
 - Planung von Erweiterungen der Roadmap und dar Priorisieren von neuen Funktionen
-- Anpassungen badierend auf Nutzerfeedback, insbesondere bezüglich der Übersichtlichkeit, Verständlichkeit und Navigation
+- Anpassungen basierend auf Nutzerfeedback, insbesondere bezüglich der Übersichtlichkeit, Verständlichkeit und Navigation
 
 ## Sonnenseiten:
 - Viele ideen und kreative Zusammenarbeit für das Layout und kleine Details.
@@ -23,14 +21,8 @@ Während der Entwicklung unserer App haben wir gelernt, wie wichtig eine gute St
 
 Ausserdem haben wir gemerkt, dass nicht immer der komplizierteste oder kürzeste Code die beste Lösung ist. Teilweise waren längere, aber verständlichere Lösungen sinnvoller, vor allem wenn mehrere Personen gleichzeitig am Projekt gearbeitet haben. Auch Streamlit hat uns gezeigt, dass gewisse Funktionen einfacher umzusetzen sind als andere und man manchmal kreative Lösungen finden muss.
 
-Ein weiteres wichtiges Learning war die Zusammenarbeit im Team. Gute Kommunikation und klare Absprachen waren notwendig, damit keine Konflikte beim Arbeiten im VS Code entstehen und alle am gleichen Stand bleiben.
+Ein weiteres wichtiges Learning war die Zusammenarbeit im Team. Gute Kommunikation und klare Absprachen waren notwendig, damit keine Konflikte beim Arbeiten im VS Code entstehen und alle auf dem gleichen Stand bleiben.
 
 Zusätzlich haben wir durch die Nutzertests erkannt, wie wichtig Feedback von anderen Personen ist. Kleine Änderungen im Layout oder bei den Hilfestellungen konnten die Benutzerfreundlichkeit der App bereits deutlich verbessern.
 
 Ausserdem war es spannend zu sehen, wie man Fachwissen aus dem Labor mit Informatik und App-Entwicklung kombinieren kann.
-
-
-
-
-
-
