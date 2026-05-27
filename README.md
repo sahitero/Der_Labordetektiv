@@ -1,4 +1,4 @@
-# Der Labor Detektiv
+# Der Labordetektiv
 Schluss mit öden Lehrbüchern! In "Der Labor-Detektiv" wirst du zum Profi-Ermittler in der Welt der Mikroorganismen und Blutparameter. Analysiere Agarplatten, entschlüssle mikroskopisch die Gram-Färbungen und identifiziere Blutbilder, um medizinische Rätsel zu lösen. Sammle Punkte, schalte Level frei und trainiere dein visuelles Gedächtnis, bis du jedes Bakterium im Schlaf erkennst. Diagnostik war noch nie so spannend!
 
 
