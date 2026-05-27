@@ -10,7 +10,7 @@ Vanessa Cakoncev (cakonvan@students.zhaw.ch)
 
 
 ## Unsere Persona: Laura
-Die App wurde gezielt für **Laura (21)** entwickelt, eine engagierte Biomedizin-Studentin im 4. Semester.
+Die App wurde gezielt für **Laura (21)** entwickelt, eine engagierte Biomedizin-Studentin.
 
 * **Bedürfnis:** Laura liebt visuelles Lernen und Gamification. Sie möchte weg von „trockenen Textwüsten“ und sucht Erfolgserlebnisse beim Lernen.
 * **Hürde:** Die Angst vor der Bilderflut bei echten Proben und Prüfungsstress.
@@ -22,7 +22,7 @@ Die App wurde gezielt für **Laura (21)** entwickelt, eine engagierte Biomedizin
 Das Spiel führt Nutzer durch einen realistischen diagnostischen Workflow:
 
 1.  **Fall-Auswahl:** Zugriff auf verschiedene Patientenakten (z. B. "Kelly Keller") mit detaillierten Anamnesen.
-2.  **Mikroskopie-Simulator:** Ein interaktives Mini-Spiel zur Durchführung der **Gram-Färbung**. Erst bei korrekter Reihenfolge (Kristallviolett → Lugol → Alkohol → Safranin) wird das Präparat sichtbar.
-3.  **Kultur & Tests:** Virtuelle Auswertung von Agarplatten (COS, MAC, CNA) und Durchführung biochemischer Schnelltests (Katalase, Koagulase).
+2.  **Mikroskopie-Simulator:** Ein interaktives Mini-Spiel zur Durchführung der **Gram-Färbung**. Erst bei korrekter Reihenfolge wird das Präparat sichtbar.
+3.  **Kultur & Tests:** Virtuelle Auswertung von Agarplatten (COS, MAC, CNA) und Interpretieren biochemischer Schnelltests (Katalase, Koagulase).
 4.  **Blutanalyse:** Einbindung eines Chemie- und Hämatologie-Analyzers zur Beurteilung von Entzündungswerten und dem Differenzialblutbild.
-5.  **Digitales Laborjournal:** Eine Funktion zur Speicherung wichtiger Befunde, die als Entscheidungsgrundlage für die finale Diagnose dient.
+5.  **Digitales Laborjournal:** Eine Funktion zur Speicherung der Befunde, die als Entscheidungsgrundlage für die finale Diagnose dient.
