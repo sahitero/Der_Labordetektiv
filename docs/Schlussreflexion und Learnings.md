@@ -1,28 +1,37 @@
-## Herausforderungen:
-- Wer arbeitet wann im vscode und das kommunizieren, damit es keine Unstimmigkeiten gibt und es bei allen funktioniert (Koordination)
-- Klare Aufgabenverteilung innerhallb des Teams (Programmierung, Layoutgestaltung, Nutzertest, Dokumentation etc.)
-- Bei Roadmap soweit in Zukunft denken (wann wir was an unserer App verändern).
-- Entscheidungen darüber treffen, welche Funktionen zum Grundgerüst der App gehören und welche Ideen optional bleiben
-- Entwicklung realistischer und logisch passender Laborresultate, sowie Agarplatten für die einzelnen Fälle
-- Wieviel Hilfe bauen wir in die App ein, damit es noch als Unterstützung dient und nicht schon die Lösung gibt? -> Müssen wir unsere Persona anpassen?
-- Machen unsere Analyseresultate Sinn?
-- Planung von Erweiterungen der Roadmap und dar Priorisieren von neuen Funktionen
-- Anpassungen basierend auf Nutzerfeedback, insbesondere bezüglich der Übersichtlichkeit, Verständlichkeit und Navigation
+# Herausforderungen:
+## Koordination im Team und Aufgabenverteilung
+Eine unserer ersten Herausforderungen war die technische Koordination beim gemeinsamen Programmieren in VS Code. Wir mussten uns genau absprechen, wer wann am Code arbeitet und wie wir kommunizieren, damit es keine Versionskonflikte gibt und das Programm bei allen im Team fehlerfrei läuft. Auch die Aufgabenverteilung mussten wir klar regeln, um die Zuständigkeiten für Programmierung, Layout, Nutzertests und Dokumentation sinnvoll aufzuteilen.
 
-## Sonnenseiten:
-- Viele ideen und kreative Zusammenarbeit für das Layout und kleine Details.
-- Gute Kommunikation und gegenseitige Unterstützung innerhalb des Teams
-- Die Roadmap konnte grösstenteils eingehalten werden, wodurch Entwicklung strukturiert verlief
-- Durch Kombination von Kreativität und gelerntem Fachwissen entstand eine fachlich richtige App mit sinnvollen Elementen
-- Nutzerfeedback half dabei, die App benutzerfreundlicher und verständlicher zu gestalten
+## Fachliche Logik und die passende Hilfestellung
+Auf der inhaltlichen Seite lag eine grosse Hürde darin, für die einzelnen Fälle absolut realistische und logisch stimmige Laborresultate sowie die passenden Agarplatten zu entwickeln. Wir mussten unsere eigenen Analyseresultate immer wieder kritisch prüfen, um sicherzustellen, dass sie fachlich auch wirklich Sinn ergeben.
 
-## Learnings:
-Während der Entwicklung unserer App haben wir gelernt, wie wichtig eine gute Strukturierung von Code ist. Besonders bei grösseren Projekten wurde schnell klar, dass Übersichtlichkeit und klare Aufteilungen entscheidend sind, damit man sich im Code zurechtfindet und Fehler einfacher beheben kann.
+Gleichzeitig stand die Frage im Raum, wie viel Hilfestellung wir in die App einbauen. Das Tool soll den Nutzern eine echte Unterstützung bieten, darf aber nicht direkt die Lösung vorwegnehmen. Diese Überlegung hat uns auch dazu gebracht, unsere Persona noch anzupassen, um die Hilfen genau auf das Vorwissen der Zielgruppe abzustimmen.
 
-Ausserdem haben wir gemerkt, dass nicht immer der komplizierteste oder kürzeste Code die beste Lösung ist. Teilweise waren längere, aber verständlichere Lösungen sinnvoller, vor allem wenn mehrere Personen gleichzeitig am Projekt gearbeitet haben. Auch Streamlit hat uns gezeigt, dass gewisse Funktionen einfacher umzusetzen sind als andere und man manchmal kreative Lösungen finden muss.
+## Roadmap, Fokus und User-Feedback
+Auch das Projektmanagement hat uns gefordert. Es war gar nicht so einfach, bei der Roadmap weit genug in die Zukunft zu denken und vorauszuschauen, wann wir welche Änderungen an der App umsetzen wollen. Wir mussten klare Entscheidungen treffen, welche Funktionen zwingend zum Grundgerüst gehören und welche Ideen erst einmal optional bleiben.
 
-Ein weiteres wichtiges Learning war die Zusammenarbeit im Team. Gute Kommunikation und klare Absprachen waren notwendig, damit keine Konflikte beim Arbeiten im VS Code entstehen und alle auf dem gleichen Stand bleiben.
+Die Roadmap mussten wir laufend erweitern und neue Funktionen richtig priorisieren. Das galt besonders, nachdem wir das Feedback der Testnutzer vorliegen hatten: Die App darauf basierend anzupassen – vor allem bei der Übersichtlichkeit, der Verständlichkeit und einer einfachen Navigation –, war ein intensiver Prozess.
 
-Zusätzlich haben wir durch die Nutzertests erkannt, wie wichtig Feedback von anderen Personen ist. Kleine Änderungen im Layout oder bei den Hilfestellungen konnten die Benutzerfreundlichkeit der App bereits deutlich verbessern.
+# Sonnenseiten:
+## Kreativität, Teamwork und gute Kommunikation
+Ein großer Pluspunkt im Projekt war unsere kreative Zusammenarbeit. Wir hatten extrem viele Ideen für das Layout und die kleinen Details und konnten diese super gemeinsam weiterentwickeln. Das hat auch deshalb so gut funktioniert, weil die Kommunikation im Team durchgehend gestimmt hat – wir haben uns gegenseitig unterstützt, Probleme direkt angesprochen und konnten uns voll aufeinander verlassen.
 
-Ausserdem war es spannend zu sehen, wie man Fachwissen aus dem Labor mit Informatik und App-Entwicklung kombinieren kann.
+## Strukturierte Entwicklung und fachliche Umsetzung
+Auch beim Projektmanagement lief es rund. Wir konnten unsere Roadmap grösstenteils wie geplant einhalten, wodurch die gesamte Entwicklung sehr strukturiert verlaufen ist. Besonders stolz sind wir auf das Endergebnis. Durch die Kombination aus unserer Kreativität und dem gelernten Fachwissen ist eine App entstanden, die nicht nur Spass macht, sondern auch fachlich absolut richtig ist und durchweg sinnvolle Elemente enthält.
+
+## Mehrwert durch Nutzerfeedback
+Ein echtes Highlight war für uns die Testphase. Das Feedback der Nutzer war extrem hilfreich und hat uns die perfekte Vorlage geliefert, um die App noch einmal gezielt anzupassen. Dadurch konnten wir die Anwendung am Ende deutlich benutzerfreundlicher, verständlicher und intuitiver gestalten.
+
+# Learnings:
+## Sauberer Code und die Realität in Streamlit
+Ein zentrales Learning für uns war, wie wichtig eine gute Strukturierung des Codes ist. Gerade bei einem grösseren Projekt verliert man sonst schnell den Überblick. Wir haben gemerkt, dass eine klare Aufteilung entscheidend ist, um sich zurechtzufinden und Fehler ohne langes Suchen zu beheben.
+
+Dabei haben wir auch gelernt, dass der komplizierteste oder kürzeste Code selten der beste ist. Oft waren längere, aber dafür verständlichere Lösungen viel sinnvoller, besonders, weil wir zu viert am selben Projekt gearbeitet haben und die andere Person den Code ja auch verstehen musste. Streamlit hat uns ausserdem gezeigt, dass manche Funktionen super schnell gehen, andere dafür kniffliger sind, sodass man manchmal einfach kreative Umwege finden muss.
+
+## Teamarbeit und Kommunikation
+In Sachen Teamwork wissen wir jetzt erst recht, wie unverzichtbar eine gute Kommunikation und klare Absprachen sind. Nur so konnten wir das Arbeiten in VS Code koordinieren, Konflikte im Code vermeiden und sicherstellen, dass alle immer auf dem gleichen Stand sind.
+
+## Der Blick von aussen und Interdisziplinarität
+Durch die Nutzertests ist uns klar geworden, wie viel das Feedback von Aussenstehenden wert ist. Man selbst wird irgendwann betriebsblind, aber schon kleine Anpassungen am Layout oder bei den Hilfestellungen haben die Benutzerfreundlichkeit der App enorm verbessert.
+
+Schlussendlich war es für uns eine super Erfahrung zu sehen, wie gut man das Fachwissen aus dem Labor mit der Informatik und der App-Entwicklung verknüpfen kann und wie viel Spass es macht, diese beiden Welten zusammenzubringen.
