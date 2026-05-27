@@ -26,3 +26,7 @@ Das Spiel führt Nutzer durch einen realistischen diagnostischen Workflow:
 3.  **Kultur & Tests:** Virtuelle Auswertung von Agarplatten (COS, MAC, CNA) und Interpretieren biochemischer Schnelltests (Katalase, Koagulase).
 4.  **Blutanalyse:** Einbindung eines Chemie- und Hämatologie-Analyzers zur Beurteilung von Entzündungswerten und dem Differenzialblutbild.
 5.  **Digitales Laborjournal:** Eine Funktion zur Speicherung der Befunde, die als Entscheidungsgrundlage für die finale Diagnose dient.
+
+
+Haben wir deine Interesse erweckt ? Hier der Link zum Abenteuer: 
+https://labordetectiv.streamlit.app/
