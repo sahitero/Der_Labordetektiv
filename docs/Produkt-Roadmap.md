@@ -2,7 +2,7 @@
 
 1. Produktbeschreibung
 
-Das „Lab Diagnose Game“ ist eine interaktive Lern-App, welche Studierenden ermöglicht, medizinische Fälle spielerisch zu analysieren und Diagnosen zu stellen. 
+„Der Labordetektiv“ ist eine interaktive Lern-App, welche Studierenden ermöglicht, medizinische Fälle spielerisch zu analysieren und Diagnosen zu stellen. 
 Die Nutzer arbeiten mit verschiedenen Laborstationen (Blutwerte, Mikroskop, Agarplatten), um Hinweise zu sammeln und eine korrekte Diagnose zu treffen.
 
 Diese Roadmap beschreibt die schrittweise Entwicklung der Streamlit-App. 

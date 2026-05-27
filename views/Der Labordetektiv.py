@@ -472,7 +472,7 @@ if st.session_state.screen == "home":
     st.markdown("""
     <div style="text-align: center;">
     <h1 style="display: inline-block; background-color: rgba(255,255,255,0.8); padding: 10px 30px; border-radius: 15px; font-size: 65px; color: #4B0082; font-weight: 900; margin-bottom: 20px;">
-    Lab Diagnose Game
+    Der Labordetektiv
     </h1>
     <p style="font-size: 28px; color: #5A2D82; font-weight: 500;">Willkommen im biomedizinischen Labor!</p>
     </div>

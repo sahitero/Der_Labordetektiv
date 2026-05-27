@@ -1,4 +1,4 @@
-# Wireframe-Nutzertest – Lab Diagnose Game 🧪
+# Wireframe-Nutzertest – Der Labordetektiv 🧪
 
 ## 1. Hypothese und Bewertung
 
