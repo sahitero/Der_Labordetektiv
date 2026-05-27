@@ -10,14 +10,14 @@ Gleichzeitig stand die Frage im Raum, wie viel Hilfestellung wir in die App einb
 ## Roadmap, Fokus und User-Feedback
 Auch das Projektmanagement hat uns gefordert. Es war gar nicht so einfach, bei der Roadmap weit genug in die Zukunft zu denken und vorauszuschauen, wann wir welche Änderungen an der App umsetzen wollen. Wir mussten klare Entscheidungen treffen, welche Funktionen zwingend zum Grundgerüst gehören und welche Ideen erst einmal optional bleiben.
 
-Die Roadmap mussten wir laufend erweitern und neue Funktionen richtig priorisieren. Das galt besonders, nachdem wir das Feedback der Testnutzer vorliegen hatten: Die App darauf basierend anzupassen – vor allem bei der Übersichtlichkeit, der Verständlichkeit und einer einfachen Navigation –, war ein intensiver Prozess.
+Die Roadmap mussten wir laufend erweitern und neue Funktionen richtig priorisieren. Das galt besonders, nachdem wir das Feedback der Testnutzer vorliegen hatten: Die App darauf basierend anzupassen, vor allem bei der Übersichtlichkeit, der Verständlichkeit und einer einfachen Navigation, war ein intensiver Prozess.
 
 # Sonnenseiten:
 ## Kreativität, Teamwork und gute Kommunikation
-Ein großer Pluspunkt im Projekt war unsere kreative Zusammenarbeit. Wir hatten extrem viele Ideen für das Layout und die kleinen Details und konnten diese super gemeinsam weiterentwickeln. Das hat auch deshalb so gut funktioniert, weil die Kommunikation im Team durchgehend gestimmt hat – wir haben uns gegenseitig unterstützt, Probleme direkt angesprochen und konnten uns voll aufeinander verlassen.
+Ein grosser Pluspunkt im Projekt war unsere kreative Zusammenarbeit. Wir hatten viele Ideen für das Layout und die kleinen Details und konnten diese super gemeinsam weiterentwickeln. Das hat auch deshalb so gut funktioniert, weil die Kommunikation im Team durchgehend gestimmt hat. Wir haben uns gegenseitig unterstützt, Probleme direkt angesprochen und konnten uns voll aufeinander verlassen.
 
 ## Strukturierte Entwicklung und fachliche Umsetzung
-Auch beim Projektmanagement lief es rund. Wir konnten unsere Roadmap grösstenteils wie geplant einhalten, wodurch die gesamte Entwicklung sehr strukturiert verlaufen ist. Besonders stolz sind wir auf das Endergebnis. Durch die Kombination aus unserer Kreativität und dem gelernten Fachwissen ist eine App entstanden, die nicht nur Spass macht, sondern auch fachlich absolut richtig ist und durchweg sinnvolle Elemente enthält.
+Auch beim Projektmanagement lief es rund. Wir konnten unsere Roadmap grösstenteils wie geplant einhalten, wodurch die gesamte Entwicklung sehr strukturiert verlaufen ist. Durch die Kombination aus unserer Kreativität und dem gelernten Fachwissen ist eine App entstanden, die nicht nur Spass macht, sondern auch fachlich richtig ist und durchweg sinnvolle Elemente enthält.
 
 ## Mehrwert durch Nutzerfeedback
 Ein echtes Highlight war für uns die Testphase. Das Feedback der Nutzer war extrem hilfreich und hat uns die perfekte Vorlage geliefert, um die App noch einmal gezielt anzupassen. Dadurch konnten wir die Anwendung am Ende deutlich benutzerfreundlicher, verständlicher und intuitiver gestalten.
